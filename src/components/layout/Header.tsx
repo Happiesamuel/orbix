@@ -4,20 +4,26 @@ import { Input } from "../ui/input";
 import { IoSearch } from "react-icons/io5";
 export default function Header() {
   return (
-    <div className="flex items-center justify-between">
-      <h1>
-        BR.<span>F</span>
+    <div className="flex items-center justify-between  py-3 px-12 fixed w-full mx-auto my-0 max-w-[144rem]">
+      <h1 className="text-[#010101] font-[900] text-[20px]">
+        BR.<span className="text-[#a4a4a4]">F</span>
       </h1>
       <div className="flex items-center gap-2 justify-center px-3 w-[280px] rounded-md text-[#a4a4a4] bg-[#f2f0ea]">
-        <IoSearch className="text-2xl"/>
-        <Input className="border-none shadow-none p-0 placeholder:text-[#a4a4a4] text-[#010101]" placeholder="Search"/>
+        <IoSearch className="text-2xl" />
+        <Input
+          className="border-none shadow-none p-0 placeholder:text-[#a4a4a4] text-[#010101]"
+          placeholder="Search"
+        />
       </div>
-      <div className="flex items-center gap-2">
-        <div className="flex items-center flex-col gap-1">
+      <div className="flex items-center gap-4 text-sm font-light">
+        <div className="flex items-center flex-col relative gap-0.5">
+          <div className="absolute bottom-[80%] left-[60%] size-3.5 rounded-full flex item-center  justify-center text-[11px] bg-[#edcf5d]">
+            3
+          </div>
           <FaOpencart />
           <p>Cart</p>
         </div>
-        <div className="flex items-center flex-col gap-1">
+        <div className="flex items-center flex-col gap-0.5">
           <FaRegHeart />
           <p>Favorite</p>
         </div>

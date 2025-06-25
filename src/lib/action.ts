@@ -20,3 +20,11 @@ export async function getProdouct(id: string) {
     throw new Error(err instanceof Error ? err.message : "Unknown error");
   }
 }
+export async function getProductCategory(category: string) {
+  try {
+    const response = await axios.get(`https://dummyjson.com/products/category/${category}`);
+    return response.data;
+  } catch (err) {
+    throw new Error(err instanceof Error ? err.message : "Unknown error");
+  }
+}
