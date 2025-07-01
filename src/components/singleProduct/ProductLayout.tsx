@@ -24,7 +24,7 @@ export default function ProductLayout() {
   //   product.tags.map((y: string[]) => (x.tags.includes(y) ? x : null)).includes(x)
   // );
   return (
-    <div>
+    <div className="">
       <BreadcrumbWithCustomSeparator />
       <div className="flex justify-between py-8 ">
         <ProductImages images={product?.images} />
