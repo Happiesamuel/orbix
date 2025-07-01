@@ -8,7 +8,7 @@ export default async function page() {
   return (
     <div>
       {a.products.map((product) => (
-        <Link href={`/product/${product.id}`}>{product.title}</Link>
+        <Link key={product.id} href={`/product/${product.id}`}>{product.title}</Link>
       ))}
     </div>
   );
