@@ -103,7 +103,9 @@ export default function ProductDetails({ product }) {
               </div>
             </div>
 
-            <Button className="bg-[#010101] w-full text-white text-sm">
+            <Button style={{
+              background: "linear-gradient(to right, black, #1a1a1a, #2a2a2a, #404040, #666666)"
+            }} className=" w-full text-white text-sm">
               <IoCartOutline />
               Add to Cart
             </Button>

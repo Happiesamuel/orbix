@@ -4,9 +4,7 @@ import axios from "axios";
 
 export async function getProdoucts() {
   try {
-    const response = await axios.get(
-      "https://dummyjson.com/products?limit=200"
-    );
+    const response = await axios.get(`${process.env.API_URL}?limit=200`);
     return response.data;
   } catch (err) {
     throw new Error(err instanceof Error ? err.message : "Unknown error");
@@ -14,7 +12,9 @@ export async function getProdoucts() {
 }
 export async function getProdouct(id: string) {
   try {
-    const response = await axios.get(`https://dummyjson.com/products/${id}`);
+    const response = await axios.get(
+      `${process.env.API_URL}/${id}`
+    );
     return response.data;
   } catch (err) {
     throw new Error(err instanceof Error ? err.message : "Unknown error");
@@ -22,7 +22,19 @@ export async function getProdouct(id: string) {
 }
 export async function getProductCategory(category: string) {
   try {
-    const response = await axios.get(`https://dummyjson.com/products/category/${category}`);
+    const response = await axios.get(
+      `${process.env.API_URL}/category/${category}`
+    );
+    return response.data;
+  } catch (err) {
+    throw new Error(err instanceof Error ? err.message : "Unknown error");
+  }
+}
+export async function searchProduct(query: string) {
+  try {
+    const response = await axios.get(
+      `${process.env.API_URL}/search?q=${query}`
+    );
     return response.data;
   } catch (err) {
     throw new Error(err instanceof Error ? err.message : "Unknown error");
