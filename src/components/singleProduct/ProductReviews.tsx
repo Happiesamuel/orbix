@@ -19,8 +19,8 @@ export default function ProductReviews({ reviews,rating }) {
    <h2 className="font-bold pb-1.5 text-[#010101] text-sm">
         Customer Reviews
       </h2>
-      <div className="flex justify-between w-full py-8">
-      <div className="space-y-5 w-[50%]">
+      <div className="flex gap-5 md:flex-row flex-col justify-between w-full py-8">
+      <div className="space-y-5  md:w-[50%]">
         {reviews.map((review) => (
           <div className="flex gap-3 border-b pb-3 last:border-none border-zinc-300" key={review.id}>
             <div className="bg-zinc-100/80 size-[40px]  flex items-center justify-center rounded-full">
@@ -32,7 +32,7 @@ export default function ProductReviews({ reviews,rating }) {
                 <h3 className="text-sm text-[#010101] font-bold">
                   {review.reviewerName}
                 </h3>{" "}
-                <p className="text-light text-[#a4a4a4] text-xs">
+                <p className=" text-[#a4a4a4] text-xs">
                   {formatRelativeDate(review.date)}
                 </p>
               </div>
@@ -40,14 +40,15 @@ export default function ProductReviews({ reviews,rating }) {
               <p className="text-sm text-[#010101] font-light">
                 {review.comment}
               </p>
-              <p className="text-light text-[#a4a4a4] text-xs">
+              <p className=" text-[#a4a4a4] text-xs">
                 {review.reviewerEmail}
               </p>
             </div>
           </div>
         ))}
       </div>
-      <div className="w-[30%]">
+      {/* <div className="w-[30%]"> */}
+         <div className="w-full max-w-[400px]  md:max-w-full md:mx-0 mx-auto md:w-[40%] lg:w-[30%] flex flex-col justify-start">
         <div className="flex border-b pb-3 border-zinc-200 justify-between text-lg ">
           <Rating rate={rating} />
           <p className="font-bold">{rating}</p>

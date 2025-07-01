@@ -14,8 +14,8 @@ export default function ProductDetails({ product }) {
       <h2 className="font-bold pb-1.5 text-[#010101] text-sm">
         Product details & Specifications
       </h2>
-      <div className="py-6 flex w-full">
-        <div className="w-[50%]">
+      <div className="py-6 gap-5 flex flex-col justify-between md:flex-row w-full">
+        <div className="w-full mx-auto md:mx-0 lg:max-w-[35%] max-w-[95%] md:w-[55%]">
           <div className="grid grid-cols-[1fr_0.4fr] pt-3 pl-3 rounded-t-2xl border p-2 border-zinc-300 items-center">
             <h2 className="font-bold pb-1.5 text-[#010101] text-sm">Sku:</h2>
             <p className="text-zinc-600 font-light text-sm">{product.sku}</p>
@@ -78,11 +78,11 @@ export default function ProductDetails({ product }) {
             </p>
           </div>
         </div>
-        <div className="w-[50%] flex justify-end">
-          <div className="flex gap-3 flex-col bg-[#f2f0ea] rounded-md shadow shadow-zinc-400 h-max p-4 w-[50%]">
-            <div className="flex  gap-2">
-              <div className="relative size-[100px]  rounded-xl bg-[#ffffff]">
-                <Image src={product.images.at(0)} fill alt="prod" />
+        <div className="w-full max-w-[320px]   lg:max-w-full md:mx-0 mx-auto lg:w-[50%] flex justify-end">
+          <div className="flex gap-3 flex-col bg-[#f2f0ea] rounded-md shadow shadow-zinc-400 h-max p-4 w-full lg:w-[50%]">
+            <div className="flex  gap-5">
+              <div className="relative size-[80px]  rounded-xl bg-[#ffffff]">
+                <Image className="object-center object-contain scale-90" src={product.images.at(0)} fill alt="prod" />
               </div>
               <div>
                 <h3>{product.title}</h3>
