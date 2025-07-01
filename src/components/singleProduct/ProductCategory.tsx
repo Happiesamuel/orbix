@@ -14,7 +14,7 @@ export default function ProductCategory({ category }: { category: string }) {
 
   if (status === "pending") return <p>Loading...</p>;
   return (
-<div className="w-full max-w-screen-sm mx-auto">
+ <div className="w-full">
       <h2 className="font-bold pb-3 text-[#010101] text-sm">
         Similar Products
       </h2>
@@ -23,7 +23,7 @@ export default function ProductCategory({ category }: { category: string }) {
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={20}
         slidesPerView={1}
-        // loop={true}
+        loop={true}
         navigation
         pagination={{ clickable: true }}
         autoplay={{ delay: 3000, disableOnInteraction: false }}
