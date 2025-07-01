@@ -4,7 +4,7 @@ import { Input } from "../ui/input";
 import { IoSearch } from "react-icons/io5";
 export default function Header() {
   return (
-    <div className="flex items-center justify-between  py-3 px-12 fixed w-full mx-auto my-0 max-w-[144rem]">
+    <div className="flex backdrop-blur-sm z-[99] items-center justify-between  py-3 px-12 fixed w-full mx-auto my-0 max-w-[144rem]">
       <h1 className="text-[#010101] font-[900] text-[20px]">
         BR.<span className="text-[#a4a4a4]">F</span>
       </h1>

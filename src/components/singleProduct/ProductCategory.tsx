@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import useGetProductCategory from "../hooks/useGetProduct copy";
+import useGetProductCategory from "../hooks/useGetProductCategory";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
@@ -13,7 +13,6 @@ export default function ProductCategory({ category }: { category: string }) {
   // const slidesPerView = width < 768 ? 1 : width < 1024 ? 3 : 5;
 
   if (status === "pending") return <p>Loading...</p>;
-//   console.log(product);
   return (
     <div>
       <h2 className="font-bold pb-3 text-[#010101] text-sm">
