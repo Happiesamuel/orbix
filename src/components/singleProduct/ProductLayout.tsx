@@ -65,7 +65,9 @@ export default function ProductLayout() {
             {product.tags.map((tag:string) => <p className="text-sm bg-light shadow shadow-zinc-200 cursor-pointer text-green-500 px-2 rounded-full italic" key={tag}>{tag}</p>)}
           </div>
           <div className="flex items-center w-[85%] gap-2">
-            <Button className="bg-dark w-[80%] text-white text-sm">
+            <Button style={{
+              background: "linear-gradient(to right, black, #1a1a1a, #2a2a2a, #404040, #666666)"
+            }} className=" w-[80%] text-white text-sm">
               <IoCartOutline />
               Add to Cart
             </Button>

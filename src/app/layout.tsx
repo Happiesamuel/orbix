@@ -3,6 +3,7 @@ import { Outfit } from "next/font/google";
 import "./globals.css";
 import App from "@/components/App";
 import Header from "@/components/layout/Header";
+import NextTopLoader from "nextjs-toploader";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -25,6 +26,7 @@ export default function RootLayout({
       <body
         className={`${outfit.className}  antialiased  flex flex-col mx-auto my-0 max-w-[144rem]`}
       >
+        <NextTopLoader color="#121212" height={4} showSpinner={false} />
         <App>
           <Header />
           <main className="px-12 py-[65px] min-h-screen">{children}</main>
