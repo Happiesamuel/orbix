@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 export default function useSearchProduct() {
   const searchParams = useSearchParams();
   const query = searchParams.get("query") || "";
+  console.log(query)
 
   const { data: product, status } = useQuery({
     queryFn: async () =>
