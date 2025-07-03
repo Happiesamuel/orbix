@@ -8,7 +8,7 @@ import {
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
-export default function SortCatalog() {
+export default function SortCatalog({ push = "catalog" }: { push: string }) {
   const content = [
     { value: "discount-asc", label: "Discount: Low to High" },
     { value: "discount-desc", label: "Discount: High to Low" },
@@ -20,11 +20,11 @@ export default function SortCatalog() {
   const [value, setValue] = useState<string>("");
   const router = useRouter();
   const searchParams = useSearchParams();
-  
+
   function handleSortChange(sort: string) {
     const params = new URLSearchParams(searchParams);
     params.set("sort", sort);
-    router.push(`/catalog?${params.toString()}`);
+    router.push(`/${push}?${params.toString()}`);
   }
   return (
     <div className="flex items-center  gap-2">
