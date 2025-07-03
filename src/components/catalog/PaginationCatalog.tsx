@@ -11,11 +11,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 
 export default function PaginationCatalog({
+  push = "catalog",
   length,
   showPagination,
   resultPerPage,
 }: {
   length: number;
+  push: string;
   showPagination: boolean;
   resultPerPage: number;
 }) {
@@ -25,7 +27,7 @@ export default function PaginationCatalog({
   function handlePageChange(page: number) {
     const params = new URLSearchParams(searchParams);
     params.set("page", page.toString());
-    router.push(`/catalog?${params.toString()}`);
+    router.push(`/${push}?${params.toString()}`);
   }
   return (
     showPagination && (
@@ -35,44 +37,62 @@ export default function PaginationCatalog({
             {page > 1 && (
               <PaginationItem>
                 <PaginationPrevious
-                className="bg-light cursor-pointer"
+                  className="bg-light cursor-pointer"
                   onClick={() => handlePageChange(page - 1)}
                 />
               </PaginationItem>
             )}
             {page > 1 && (
-              <PaginationItem >
-                <PaginationLink className="bg-light cursor-pointer" onClick={() => handlePageChange(page - 1)}>
+              <PaginationItem>
+                <PaginationLink
+                  className="bg-light cursor-pointer"
+                  onClick={() => handlePageChange(page - 1)}
+                >
                   {page - 1}
                 </PaginationLink>
               </PaginationItem>
             )}
             <PaginationItem>
-              <PaginationLink style={{
-                 background: "linear-gradient(to right, black, #1a1a1a, #2a2a2a, #404040, #666666)"
-              }} className="text-white hover:text-white cursor-not-allowed">{page}</PaginationLink>
+              <PaginationLink
+                style={{
+                  background:
+                    "linear-gradient(to right, black, #1a1a1a, #2a2a2a, #404040, #666666)",
+                }}
+                className="text-white hover:text-white cursor-not-allowed"
+              >
+                {page}
+              </PaginationLink>
             </PaginationItem>
-            
-            <PaginationItem>
+
               {page * resultPerPage < length && (
-                <PaginationLink className="bg-light cursor-pointer" onClick={() => handlePageChange(page + 1)}>
+            <PaginationItem>
+                <PaginationLink
+                  className="bg-light cursor-pointer"
+                  onClick={() => handlePageChange(page + 1)}
+                >
                   {page + 1}
                 </PaginationLink>
-              )}
             </PaginationItem>
-            
-            <PaginationItem>
+              )}
+
               {page * resultPerPage < length ||
                 (page * resultPerPage < length && (
-                  <PaginationLink className="bg-light cursor-pointer" onClick={() => handlePageChange(page + 2)}>
+            <PaginationItem>
+                  <PaginationLink
+                    className="bg-light cursor-pointer"
+                    onClick={() => handlePageChange(page + 2)}
+                  >
                     {page + 2}
                   </PaginationLink>
-                ))}
             </PaginationItem>
-         
+                ))}
+
             {page * resultPerPage < length && (
               <PaginationItem>
-                <PaginationNext className="bg-light cursor-pointer" onClick={() => handlePageChange(page + 1)} />
+                <PaginationNext
+                  className="bg-light cursor-pointer"
+                  onClick={() => handlePageChange(page + 1)}
+                />
               </PaginationItem>
             )}
           </PaginationContent>

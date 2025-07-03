@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${outfit.className}  antialiased  flex flex-col mx-auto my-0 max-w-[144rem]`}
+        className={`${outfit.className} bg-[#fffdf5]  antialiased  flex flex-col mx-auto my-0 max-w-[144rem]`}
       >
         <NextTopLoader color="#121212" height={4} showSpinner={false} />
         <App>

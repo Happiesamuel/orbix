@@ -12,9 +12,7 @@ export async function getProdoucts() {
 }
 export async function getProdouct(id: string) {
   try {
-    const response = await axios.get(
-      `${process.env.API_URL}/${id}`
-    );
+    const response = await axios.get(`${process.env.API_URL}/${id}`);
     return response.data;
   } catch (err) {
     throw new Error(err instanceof Error ? err.message : "Unknown error");
@@ -35,6 +33,14 @@ export async function searchProduct(query: string) {
     const response = await axios.get(
       `${process.env.API_URL}/search?q=${query}`
     );
+    return response.data;
+  } catch (err) {
+    throw new Error(err instanceof Error ? err.message : "Unknown error");
+  }
+}
+export async function getCategory() {
+  try {
+    const response = await axios.get(`${process.env.API_URL}/categories`);
     return response.data;
   } catch (err) {
     throw new Error(err instanceof Error ? err.message : "Unknown error");

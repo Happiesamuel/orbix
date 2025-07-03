@@ -25,15 +25,20 @@ export default function ProductLayout() {
       name: "Catalog",
     },
   ];
+  const brand = product.brand
+    ? [{ name: product.brand, route: `/catalog?query=${product.brand}` }]
+    : [];
 
   array = [
     ...array,
-    { name: product.category, route: `` },
-    { name: product.brand, route: `/catalog?query=${product.brand}` },
-    ...product.tags.map((tag: string) => ({
-      name: tag,
-      route: `/catalog?query=${tag}`,
-    })),
+    {
+      name: product.category
+        .split("-")
+        .map((x: string) => x.charAt(0).toUpperCase() + x.slice(1))
+        .join(" "),
+      route: `/category/${product.category}`,
+    },
+    ...brand,
     { name: product.title, route: `/product/${product.id}` },
   ];
   // const a = products.products.filter((item) => item.brand === product.brand);
