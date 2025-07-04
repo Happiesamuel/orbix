@@ -15,13 +15,13 @@ export default function Header() {
     setValue("");
   }
   return (
-    <div className="flex border-b border-zinc-100/80 backdrop-blur-sm z-[99] items-center justify-between  py-3 px-12 fixed w-full mx-auto my-0 max-w-[144rem]">
-      <h1 className="text-[#010101] font-[900] text-[20px]">
+    <div className="flex bg-light/40 border-b border-zinc-100/80 backdrop-blur-sm z-[99] items-center justify-between  py-3 px-12 fixed w-full mx-auto my-0 max-w-[144rem]">
+      <h1 className="text-dark font-[900] text-[20px]">
         BR.<span className="text-[#a4a4a4]">F</span>
       </h1>
       <form
         onSubmit={handleSubmit}
-        className="flex items-center gap-2 justify-center px-3 w-[280px] rounded-md text-[#a4a4a4] bg-[#f2f0ea]"
+        className="flex items-center gap-2 justify-center px-3 w-[280px] rounded-md text-[#a4a4a4] bg-white"
       >
         <IoSearch className="text-2xl" />
         <Input
