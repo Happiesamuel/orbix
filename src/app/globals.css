@@ -61,7 +61,6 @@
   -ms-overflow-style: none;
 }
 .gradtext {
-  font-size: 2rem;
   font-weight: bold;
   background: linear-gradient(
     to bottom,
