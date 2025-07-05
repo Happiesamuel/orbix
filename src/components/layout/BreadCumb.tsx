@@ -22,7 +22,7 @@ export function BreadcrumbWithCustomSeparator({
             <div key={arr.name} className="flex items-center gap-2">
               <BreadcrumbLink asChild>
                 <Link
-                  className={` ${
+                  className={` text-[10px] md:text-xs ${
                     array.length > i + 1 ? "text-gray-ash" : "text-dark font-bold"
                   }`}
                   href={arr.route}

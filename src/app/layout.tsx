@@ -4,6 +4,8 @@ import "./globals.css";
 import App from "@/components/App";
 import Header from "@/components/layout/Header";
 import NextTopLoader from "nextjs-toploader";
+import BottomLinks from "@/components/layout/BottomLinks";
+import MobileHeader from "@/components/layout/MobileHeader";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -28,10 +30,18 @@ export default function RootLayout({
       >
         <NextTopLoader color="#121212" height={4} showSpinner={false} />
         <App>
-          <Header />
+          <div className="hidden lg:block">
+            <Header />
+          </div>
+          <div className="block lg:hidden">
+            <MobileHeader />
+          </div>
           <main className="lg:mx-12 md:mx-8 mx-4 py-[65px] min-h-screen">
-            
-            {children}</main>
+            {children}
+          </main>
+          <div className="block lg:hidden">
+            <BottomLinks />
+          </div>
         </App>
       </body>
     </html>

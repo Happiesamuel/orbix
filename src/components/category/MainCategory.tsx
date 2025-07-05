@@ -10,8 +10,8 @@ export default function MainCategory() {
 
 
   return (
-    <div className="py-2 lg:py-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full gap-y-6 gap-4 place-items-center pt-2 pb-4">
+    <div className="py-1 lg:py-6">
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 w-full gap-y-6 gap-4 place-items-center pt-2 pb-4">
         {category.products.map((product) => (
           <Product
             product={product}

@@ -1,7 +1,4 @@
-import BannerOne from "@/components/home/BannerOne";
 import Banners from "@/components/home/Banners";
-import BannerThree from "@/components/home/BannerThree";
-import BannerTwo from "@/components/home/BannerTwo";
 import ChooseCategory from "@/components/home/ChooseCategory";
 import FirstRow from "@/components/home/FirstRow";
 import React from "react";

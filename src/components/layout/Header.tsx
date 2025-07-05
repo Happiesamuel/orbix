@@ -21,7 +21,7 @@ export default function Header() {
       </h1>
       <form
         onSubmit={handleSubmit}
-        className="flex items-center gap-2 justify-center px-3 w-[280px] rounded-md text-[#a4a4a4] bg-white"
+        className="flex border border-zinc-200 items-center gap-2 justify-center px-3 w-[280px] rounded-md text-[#a4a4a4] bg-white"
       >
         <IoSearch className="text-2xl" />
         <Input
