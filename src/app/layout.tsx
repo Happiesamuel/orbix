@@ -29,7 +29,9 @@ export default function RootLayout({
         <NextTopLoader color="#121212" height={4} showSpinner={false} />
         <App>
           <Header />
-          <main className="lg:px-12 px-4 py-[65px] min-h-screen">{children}</main>
+          <main className="lg:mx-12 md:mx-8 mx-4 py-[65px] min-h-screen">
+            
+            {children}</main>
         </App>
       </body>
     </html>
