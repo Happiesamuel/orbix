@@ -28,9 +28,9 @@ export default function SortCatalog({ push = "catalog" }: { push: string }) {
   }
   return (
     <div className="flex items-center  gap-2">
-      <p className="font-bold text-dark">Sort by</p>
+      <p className="text-[10px] md:text-xs font-bold text-dark">Sort by</p>
       <Select onValueChange={(value) => handleSortChange(value)}>
-        <SelectTrigger className="w-[100px] md:w-[180px]">
+        <SelectTrigger className="text-[10px] !py-1.5 md:text-xs w-[100px] md:w-[180px]">
           <SelectValue placeholder="Sort" />
         </SelectTrigger>
         <SelectContent className="bg-light">
@@ -44,7 +44,7 @@ export default function SortCatalog({ push = "catalog" }: { push: string }) {
                     ? "transparent"
                     : "linear-gradient(to right, black, #1a1a1a, #2a2a2a, #404040, #666666)",
               }}
-              className={`hover:text-white transition-all duration-500 cursor-pointer ${
+              className={`hover:text-white transition-all duration-500 cursor-pointer text-[10px] md:text-xs ${
                 value === item.value ? "!text-white" : "text-dark"
               }`}
               key={item.value}

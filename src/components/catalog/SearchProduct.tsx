@@ -54,12 +54,12 @@ export default function SearchProduct({ search, default: defaultProducts }) {
     <div>
       <div className="flex items-center justify-between w-full px-0 md:px-4 py-2">
         <SortCatalog push="catalog" />
-        <p className="text-gray-ash flex items-center gap-1.5">
+        <p className="text-gray-ash text-[10px] text-xs flex items-center gap-1.5">
           <span className="font-bold text-dark">{prod.products.length}</span>{" "}
           products {searchParams.get("query") && "found"}
         </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full gap-4 place-items-center pt-2 pb-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full gap-4 place-items-center pt-2 pb-4">
         {sortProducts.map((product) => (
           <Product product={product} key={product.id} active={active} setActive={setActive} />
         ))}

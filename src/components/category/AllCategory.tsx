@@ -36,14 +36,14 @@ export default function AllCategory({ products }) {
     <div>
       <div className="flex items-center justify-between w-full px-0 md:px-4 py-2">
         <SortCatalog push="category" />
-        <p className="text-gray-ash flex items-center gap-1.5">
+        <p className="text-gray-ash md:text-xs lg:text-sm text-[10px] flex items-center gap-1.5">
           <span className="font-bold text-dark">
             {products.products.length}
           </span>{" "}
           products {searchParams.get("query") && "found"}
         </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full gap-y-6 gap-4 place-items-center pt-2 pb-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 w-full gap-y-6 gap-4 place-items-center pt-2 pb-4">
         {sortProducts.map((product) => (
           <Product
             product={product}
