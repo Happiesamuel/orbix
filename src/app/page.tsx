@@ -1,15 +1,38 @@
-import { getProdoucts } from "@/lib/action";
-import Link from "next/link";
+import BannerOne from "@/components/home/BannerOne";
+import BannerThree from "@/components/home/BannerThree";
+import BannerTwo from "@/components/home/BannerTwo";
+import ChooseCategory from "@/components/home/ChooseCategory";
+import FirstRow from "@/components/home/FirstRow";
 import React from "react";
 
-export default async function page() {
-  const a = await getProdoucts();
-  console.log(a);
+export default function page() {
   return (
     <div>
-      {a.products.map((product) => (
-        <Link key={product.id} href={`/product/${product.id}`}>{product.title}</Link>
-      ))}
+      <BannerOne />
+      <FirstRow
+        route={"/category/smartphones"}
+        text="SmartPhones For You!"
+        category="smartphones"
+        key="smartphones"
+        slice={8}
+      />
+      <BannerTwo />
+      <FirstRow
+        route={"/category/laptops"}
+        text="Laptops For You!"
+        category="laptops"
+        key="laptops"
+        slice={4}
+      />
+      <BannerThree />
+      <FirstRow
+        route={"/category/mens-watches"}
+        text="Wrist Watches For You!"
+        category="mens-watches"
+        key="mens-watches"
+        slice={4}
+      />
+      <ChooseCategory />
     </div>
   );
 }

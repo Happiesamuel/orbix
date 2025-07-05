@@ -13,7 +13,7 @@
   --color-border: var(--border);
   --color-destructive: var(--destructive);
   --color-accent-foreground: var(--accent-foreground);
-   --color-secondary: var(--secondary);
+  --color-secondary: var(--secondary);
   --color-primary-foreground: var(--primary-foreground);
   --color-primary: var(--primary);
   --color-popover-foreground: var(--popover-foreground);
@@ -46,7 +46,7 @@
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
 
-  --dark:#010101;
+  --dark: #010101;
   --gray-ash: #a4a4a4;
   --light: #f2f0ea;
   --yellow-gray: #edcf5d;
@@ -58,7 +58,22 @@
 
 .hide-scrollbar {
   scrollbar-width: none;
-  -ms-overflow-style: none; 
+  -ms-overflow-style: none;
+}
+.gradtext {
+  font-size: 2rem;
+  font-weight: bold;
+  background: linear-gradient(
+    to bottom,
+    black,
+    #2a2a2a,
+    #404040,
+    #666666
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
 }
 
 @layer base {
