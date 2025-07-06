@@ -1,8 +1,10 @@
 import CatalogLayout from "@/components/catalog/CatalogLayout";
-import React from "react";
+import React, { Suspense } from "react";
 
 export default function page() {
-  return <div>
-    <CatalogLayout />
-  </div>;
+  return (
+    <Suspense fallback={<p>Loading...</p>}>
+      <CatalogLayout />
+    </Suspense>
+  );
 }

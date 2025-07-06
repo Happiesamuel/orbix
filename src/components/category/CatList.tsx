@@ -1,9 +1,19 @@
 "use client";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 
-export default function CatList({ category, value, setValue, product }) {
+export default function CatList({
+  category,
+  value,
+  setValue,
+  product,
+}: {
+  value: string;
+  setValue: Dispatch<SetStateAction<string>>;
+  product: Product[];
+  category: Category;
+}) {
   const params = useParams();
   const active = params.slug || "all";
   const productLength = product.filter(

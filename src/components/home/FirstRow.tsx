@@ -4,9 +4,21 @@ import Product from "../layout/Product";
 import Link from "next/link";
 import useGetHomeProduct from "../hooks/useGetHomeProducts";
 
-export default function FirstRow({ category, slice = 4, text, route, key }) {
+export default function FirstRow({
+  category,
+  slice = 4,
+  text,
+  route,
+  key,
+}: {
+  category: string;
+  slice: number;
+  text: string;
+  route: string;
+  key: string;
+}) {
   const { product, status } = useGetHomeProduct(category, key);
-  const [active, setActive] = useState(null);
+  const [active, setActive] = useState<number | null>(null);
   if (status === "pending") return <p>Loading...</p>;
   return (
     <div className="py-2 lg:py-6">
@@ -24,7 +36,7 @@ export default function FirstRow({ category, slice = 4, text, route, key }) {
         </Link>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full gap-y-4 lg:gap-y-6 gap-2 md:gap-4 place-items-center pt-2 pb-4">
-        {product.products.slice(0, slice).map((product) => (
+        {product.products.slice(0, slice).map((product: Product) => (
           <Product
             setActive={setActive}
             active={active}

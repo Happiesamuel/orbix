@@ -1,9 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { FaOpencart, FaRegHeart } from "react-icons/fa";
 
-export default function Product({ product, setActive, active }) {
+export default function Product({
+  product,
+  setActive,
+  active,
+}: {
+  product: Product;
+  active: number | null;
+  setActive: Dispatch<SetStateAction<number | null>>;
+}) {
   return (
     <div
       onMouseEnter={() => setActive(product.id)}
@@ -18,11 +26,13 @@ export default function Product({ product, setActive, active }) {
           <FaRegHeart />
         </p>
         <Image
-          src={product.images.at(
-            !active || product.images.length === 1 || active !== product.id
-              ? 0
-              : Math.floor(Math.random() * product.images.length)
-          )}
+          src={
+            product?.images.at(
+              !active || product.images.length === 1 || active !== product.id
+                ? 0
+                : Math.floor(Math.random() * product.images.length)
+            ) || ""
+          }
           alt={product.title}
           fill
           className={`object-center  object-contain ${
@@ -32,8 +42,12 @@ export default function Product({ product, setActive, active }) {
       </div>
       <div className="p-1 py-2 space-y-1 md:space-y-4">
         <div className="flex items-center text-dark justify-between  gap-2">
-          <h2 className="text-[9px] md:text-xs lg:text-sm font-[700] ">{product.title}</h2>
-          <p className=" text-[8px] md:text-[10px] lg:text-base">${product.price}</p>
+          <h2 className="text-[9px] md:text-xs lg:text-sm font-[700] ">
+            {product.title}
+          </h2>
+          <p className=" text-[8px] md:text-[10px] lg:text-base">
+            ${product.price}
+          </p>
         </div>
         <p className="text-[8px] font-bold lg:font-normal md:text-[11px] lg:text-[13px] text-gray-ash">
           {product.description.slice(0, 100)}...

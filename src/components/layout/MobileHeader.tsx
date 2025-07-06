@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import { FaOpencart, FaRegHeart } from "react-icons/fa";
 import { Input } from "../ui/input";
 import { IoSearch } from "react-icons/io5";
 import { useRouter } from "next/navigation";

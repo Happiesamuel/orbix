@@ -14,7 +14,7 @@ export default function ProductCategory({ category }: { category: string }) {
 
   if (status === "pending") return <p>Loading...</p>;
   return (
- <div className="w-full">
+    <div className="w-full">
       <h2 className="font-bold pb-3 text-[#010101] text-sm">
         Similar Products
       </h2>
@@ -35,7 +35,7 @@ export default function ProductCategory({ category }: { category: string }) {
           1280: { slidesPerView: 4 },
         }}
       >
-        {product.products?.map((item) => (
+        {product.products?.map((item: Product) => (
           <SwiperSlide
             key={item.id}
             className="p-2 mx-auto w-full max-w-[320px] relative"
@@ -44,7 +44,7 @@ export default function ProductCategory({ category }: { category: string }) {
             <div className="relative w-full h-[250px] rounded-xl bg-[#f2f0ea]">
               <Image
                 className="object-contain object-center"
-                src={item.images.at(0)}
+                src={item.images.at(0) || ""}
                 fill
                 alt="prod"
               />

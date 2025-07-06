@@ -3,7 +3,7 @@ import React from "react";
 import { Button } from "../ui/button";
 import { IoCartOutline } from "react-icons/io5";
 
-export default function ProductDetails({ product }) {
+export default function ProductDetails({ product }: { product: Product }) {
   // const table = [
   // {
 
@@ -82,7 +82,12 @@ export default function ProductDetails({ product }) {
           <div className="flex gap-3 flex-col bg-[#f2f0ea] rounded-md shadow shadow-zinc-400 h-max p-4 w-full lg:w-[50%]">
             <div className="flex  gap-5">
               <div className="relative size-[80px]  rounded-xl bg-[#ffffff]">
-                <Image className="object-center object-contain scale-90" src={product.images.at(0)} fill alt="prod" />
+                <Image
+                  className="object-center object-contain scale-90"
+                  src={product.images.at(0) || ""}
+                  fill
+                  alt="prod"
+                />
               </div>
               <div>
                 <h3>{product.title}</h3>
@@ -93,7 +98,7 @@ export default function ProductDetails({ product }) {
                     {(
                       product.price +
                       product.price * (product.discountPercentage / 100)
-                    ).toFixed(2, 0)}
+                    ).toFixed(2)}
                   </h3>
 
                   <p className="text-[10px] relative top-[5px] text-red-500  bg-[#ffffff] p-1 rounded-sm">
@@ -103,9 +108,13 @@ export default function ProductDetails({ product }) {
               </div>
             </div>
 
-            <Button style={{
-              background: "linear-gradient(to right, black, #1a1a1a, #2a2a2a, #404040, #666666)"
-            }} className=" w-full text-white text-sm">
+            <Button
+              style={{
+                background:
+                  "linear-gradient(to right, black, #1a1a1a, #2a2a2a, #404040, #666666)",
+              }}
+              className=" w-full text-white text-sm"
+            >
               <IoCartOutline />
               Add to Cart
             </Button>

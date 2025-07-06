@@ -14,7 +14,6 @@ import ProductDetails from "./ProductDetails";
 export default function ProductLayout() {
   const { product, status } = useGetProduct();
   if (status === "pending") return <div>Loading...</div>;
-  console.log(product);
   let array = [
     {
       route: "/",
