@@ -9,21 +9,15 @@ export default function ChooseCategory() {
   const { products, status } = useGetProducts();
 
   const { category, status: catStat } = useGetCatList();
-  const [product, setProduct] = useState([]);
+  const [product, setProduct] = useState<CatProduct[]>([]);
 
   if (status === "pending" || catStat === "pending")
     return <div>Loading...</div>;
-  const catList = category.map((cat) =>
-    products.products.filter((product) => product.category === cat.slug)
+  const catList = category.map((cat: Category) =>
+    products.products.filter(
+      (product: Product) => product.category === cat.slug
+    )
   );
-  // .map((x) => {
-  //   return {
-  //     length: x.length,
-  //     product: x.at(0),
-  //   };
-  // });
-  return (
-    <Choose catList={catList} product={product} setProduct={setProduct} />
-  );
-}
 
+  return <Choose catList={catList} product={product} setProduct={setProduct} />;
+}

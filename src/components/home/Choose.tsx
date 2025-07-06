@@ -1,11 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-export default function Choose({ catList, product, setProduct }) {
-  const [active, setActive] = useState(null);
+export default function Choose({
+  catList,
+  product,
+  setProduct,
+}: {
+  catList: Product[][];
+  product: CatProduct[];
+  setProduct: Dispatch<SetStateAction<CatProduct[]>>;
+}) {
+  const [active, setActive] = useState<number | null>(null);
   useEffect(() => {
     const interval = setInterval(() => {
-      const updated = catList.map((x) => ({
+      const updated: CatProduct[] = catList.map((x) => ({
         length: x.length,
         product: x[Math.floor(Math.random() * x.length)],
       }));
@@ -32,9 +40,10 @@ export default function Choose({ catList, product, setProduct }) {
                   ? "linear-gradient(to top,#404040,#666666)"
                   : "white",
             }}
-            
             className={`flex ${
-              i % 2 === 0 ? "flex-col md:flex-row-revers" : "flex-col md:flex-ro"
+              i % 2 === 0
+                ? "flex-col md:flex-row-revers"
+                : "flex-col md:flex-ro"
             } gap-1 items-center bg-white w-[100%] h-[100px] md:h-full max-w-[200px] justify-center  px-2
 duration-500 transition-all border border-zinc-300 rounded-lg py-2
             `}
@@ -48,7 +57,7 @@ duration-500 transition-all border border-zinc-300 rounded-lg py-2
             >
               <Image
                 className="object-center object-contain"
-                src={cat.product.images.at(0)}
+                src={cat.product.images.at(0) || ""}
                 alt="categoryimg"
                 fill
               />

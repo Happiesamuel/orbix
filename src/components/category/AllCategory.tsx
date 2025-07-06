@@ -4,8 +4,12 @@ import { useSearchParams } from "next/navigation";
 import Product from "../layout/Product";
 import PaginationCatalog from "../catalog/PaginationCatalog";
 import SortCatalog from "../catalog/SortCatalog";
-export default function AllCategory({ products }) {
-  const [active, setActive] = useState(null);
+export default function AllCategory({
+  products,
+}: {
+  products: { products: Product[] };
+}) {
+  const [active, setActive] = useState<number | null>(null);
   const RESULT_PER_PAGE = 8;
   const searchParams = useSearchParams();
 
@@ -44,7 +48,7 @@ export default function AllCategory({ products }) {
         </p>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 w-full gap-y-6 gap-4 place-items-center pt-2 pb-4">
-        {sortProducts.map((product) => (
+        {sortProducts.map((product: Product) => (
           <Product
             product={product}
             key={product.id}

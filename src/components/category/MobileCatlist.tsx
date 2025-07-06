@@ -10,7 +10,11 @@ import React, { useState } from "react";
 import useGetProducts from "../hooks/useGetProducts";
 import CatList from "./CatList";
 import { BiCategory } from "react-icons/bi";
-export default function MobileCatlist({ categories }) {
+export default function MobileCatlist({
+  categories,
+}: {
+  categories: Category[];
+}) {
   const [value, setValue] = useState("");
   const { products, status } = useGetProducts();
   if (status === "pending")

@@ -4,8 +4,14 @@ import { useSearchParams } from "next/navigation";
 import PaginationCatalog from "./PaginationCatalog";
 import SortCatalog from "./SortCatalog";
 import Product from "../layout/Product";
-export default function SearchProduct({ search, default: defaultProducts }) {
-  const [active, setActive] = useState(null);
+export default function SearchProduct({
+  search,
+  default: defaultProducts,
+}: {
+  search: { products: Product[] };
+  default: { products: Product[] };
+}) {
+  const [active, setActive] = useState<number | null>(null);
   const [RESULT_PER_PAGE, setResultPerPage] = useState(8);
   const searchParams = useSearchParams();
   const [prod, setProd] = useState(
@@ -61,11 +67,16 @@ export default function SearchProduct({ search, default: defaultProducts }) {
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full gap-4 place-items-center pt-2 pb-4">
         {sortProducts.map((product) => (
-          <Product product={product} key={product.id} active={active} setActive={setActive} />
+          <Product
+            product={product}
+            key={product.id}
+            active={active}
+            setActive={setActive}
+          />
         ))}
       </div>
       <PaginationCatalog
-      push="catalog"
+        push="catalog"
         resultPerPage={RESULT_PER_PAGE}
         showPagination={prod.products.length > RESULT_PER_PAGE}
         length={prod.products.length}
