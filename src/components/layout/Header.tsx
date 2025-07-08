@@ -1,19 +1,29 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaOpencart, FaRegHeart } from "react-icons/fa";
 import { Input } from "../ui/input";
 import { IoSearch } from "react-icons/io5";
 import { useRouter } from "next/navigation";
+import useCart from "../hooks/useCart";
+import Link from "next/link";
 
 export default function Header() {
   const router = useRouter();
   const [value, setValue] = useState("");
+  const { cart, setCart } = useCart();
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     if (!value) return;
     e.preventDefault();
     router.push(`/catalog?query=${value}`);
     setValue("");
   }
+  useEffect(
+    function () {
+      setCart(cart);
+    },
+    [cart, setCart]
+  );
+  const quantity = cart.map((x) => x.quantity).reduce((a, b) => a + b);
   return (
     <div className="flex bg-light/40 border-b border-zinc-100/80 backdrop-blur-sm z-[99] items-center justify-between  py-3 px-12 fixed w-full mx-auto my-0 max-w-[144rem]">
       <h1 className="text-dark font-[900] text-[20px]">
@@ -32,13 +42,16 @@ export default function Header() {
         />
       </form>
       <div className="flex items-center gap-4 text-sm font-light">
-        <div className="flex items-center flex-col relative gap-0.5">
+        <Link
+          href="/cart"
+          className="flex items-center flex-col relative gap-0.5"
+        >
           <div className="absolute bottom-[80%] left-[60%] size-3.5 rounded-full flex item-center  justify-center text-[11px] bg-[#edcf5d]">
-            3
+            {quantity}
           </div>
           <FaOpencart />
           <p>Cart</p>
-        </div>
+        </Link>
         <div className="flex items-center flex-col gap-0.5">
           <FaRegHeart />
           <p>Favorite</p>

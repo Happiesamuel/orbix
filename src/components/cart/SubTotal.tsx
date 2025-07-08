@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function SubTotal() {
+export default function SubTotal({ price }: { price: string }) {
   return (
     <div className="flex flex-col border border-zinc-300 rounded-lg p-3 md:p-4  mt-4">
       <div className=" grid grid-cols-[1fr_0.2fr] pb-3">
@@ -9,7 +9,7 @@ export default function SubTotal() {
           <p>Delivery:</p>
         </div>
         <div className="space-y-2.5 text-sm md:text-base flex flex-col items-end font-semibold text-dark">
-          <p>$360.00</p>
+          <p>${price}</p>
           <p>$0.00</p>
         </div>
       </div>
@@ -18,7 +18,7 @@ export default function SubTotal() {
           <p>Total:</p>
         </div>
         <div className="space-y-2.5 text-sm md:text-base flex flex-col items-end font-semibold text-dark">
-          <p>$360.00</p>
+          <p>${price}</p>
         </div>
       </div>
     </div>
