@@ -19,6 +19,8 @@ interface Product {
   returnPolicy: string;
   warrantyInformation: string;
   sku: string;
+  tags: string[];
+  brand:string
 }
 
 interface Reviews {

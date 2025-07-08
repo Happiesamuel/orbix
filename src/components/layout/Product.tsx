@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { Dispatch, SetStateAction } from "react";
 import { FaOpencart, FaRegHeart } from "react-icons/fa";
-import useCart from "../hooks/useCart";
 
 export default function Product({
   product,
@@ -14,7 +13,6 @@ export default function Product({
   active: number | null;
   setActive: Dispatch<SetStateAction<number | null>>;
 }) {
-  const {} = useCart();
   function addToCart() {
     alert("sss");
   }
