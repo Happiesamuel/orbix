@@ -24,7 +24,7 @@ export default function ProductImages({ images }: { images: string[] }) {
       </div>
 
   <div className="flex   w-full items-center justify-center">
-        <div className="relative   w-full h-[320px] md:h-[400px] md:max-w-[600px] max-w-[360px] md:size-[360px] md:w-[75%]  rounded-xl bg-[#f2f0ea]">
+        <div className="relative   w-full h-[280px] md:h-[400px] md:max-w-[600px] max-w-[360px] md:size-[360px] md:w-[75%]  rounded-xl bg-[#f2f0ea]">
       <Image key={img} src={img} className="object-center object-contain scale-90" fill alt="prod" />
       </div>
   </div>
