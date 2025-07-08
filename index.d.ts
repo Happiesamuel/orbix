@@ -22,7 +22,7 @@ interface Product {
 }
 
 interface Reviews {
-    id:number
+  id: number;
   reviewerName: string;
   date: string;
   rating: number;
@@ -38,4 +38,8 @@ interface Category {
 type CatProduct = {
   length: number;
   product: Product;
+};
+type Cart = {
+  product: Product;
+  quantity: number;
 };

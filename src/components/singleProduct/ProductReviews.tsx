@@ -21,11 +21,11 @@ export default function ProductReviews({
   const maxCount = Math.max(...ratings.map((r) => r.count));
 
   return (
-    <div>
+    <div className="pt-3">
       <h2 className="font-bold pb-1.5 text-[#010101] text-sm">
         Customer Reviews
       </h2>
-      <div className="flex gap-5 md:flex-row flex-col justify-between w-full py-8">
+      <div className="flex gap-5 md:flex-row flex-col justify-between w-full py-5 md:py-8">
         <div className="space-y-5  md:w-[50%]">
           {reviews.map((review) => (
             <div

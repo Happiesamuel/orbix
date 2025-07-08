@@ -52,7 +52,7 @@ export default function BottomLinks() {
               : "text-dark"
           }`}
         >
-          <div className="text-[10px] md:text-lg">{link.svg}</div>
+          <div className="text-[15px] md:text-lg">{link.svg}</div>
           <p className="text-[8px] md:text-xs">{link.slug}</p>
         </Link>
       ))}
