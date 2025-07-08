@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { Dispatch, SetStateAction } from "react";
 import { FaOpencart, FaRegHeart } from "react-icons/fa";
+import useCart from "../hooks/useCart";
 
 export default function Product({
   product,
@@ -13,9 +14,20 @@ export default function Product({
   active: number | null;
   setActive: Dispatch<SetStateAction<number | null>>;
 }) {
+  const { cart, setCart } = useCart();
   function addToCart() {
-    alert("sss");
+    const newObj = {
+      product: product,
+      quantity: 1,
+    };
+    setCart((i) =>
+      i.some((x: Cart) => x.product.id === product.id) ? [...i] : [...i, newObj]
+    );
   }
+  function removeFromCart() {
+    setCart((i) => i.filter((x) => x.product.id !== product.id));
+  }
+  const isInCart = cart.some((x) => x.product.id === product.id);
   return (
     <div
       onMouseEnter={() => setActive(product.id)}
@@ -64,7 +76,7 @@ export default function Product({
             View Details
           </Link>
           <button
-            onClick={() => addToCart()}
+            onClick={() => (isInCart ? removeFromCart() : addToCart())}
             style={{
               background:
                 "linear-gradient(to top, black, #1a1a1a, #2a2a2a, #404040, #666666)",
@@ -72,7 +84,7 @@ export default function Product({
             className="cursor-pointer text-[7px] md:text-[10px]  lg:text-xs flex items-center gap-2 rounded-full py-1 px-1.5  md:py-1.5 md:px-3  bg-dark text-light"
           >
             <FaOpencart />
-            Add to Cart
+            {isInCart ? "Remove from Cart" : "Add to Cart"}
           </button>
         </div>
       </div>
