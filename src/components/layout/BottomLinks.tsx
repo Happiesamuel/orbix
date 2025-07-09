@@ -35,7 +35,7 @@ export default function BottomLinks() {
     },
   ];
   return (
-    <div className="flex items-center justify-evenly lg:hidden bg-light/20 border-t border-white backdrop-blur-sm fixed bottom-0 w-full">
+    <div className="flex z-50 items-center justify-evenly lg:hidden bg-light/20 border-t border-white backdrop-blur-sm fixed bottom-0 w-full">
       {links.map((link) => (
         <Link
           href={link.route}

@@ -1,9 +1,13 @@
+"use client";
+import RecentView from "@/components/cart/RecentView";
 import Banners from "@/components/home/Banners";
 import ChooseCategory from "@/components/home/ChooseCategory";
 import FirstRow from "@/components/home/FirstRow";
+import useRecentView from "@/components/hooks/useRecentView";
 import React from "react";
 
-export default function page() {
+export default function Page() {
+  const { recentView } = useRecentView();
   return (
     <div className="">
       <Banners
@@ -21,7 +25,7 @@ export default function page() {
       />
       <Banners
         text="Hot Deals 🔥 - Selected Laptops Up to 30% Off!"
-           link="/category/laptops"
+        link="/category/laptops"
         firstImg="5"
         secondImg="3"
       />
@@ -34,7 +38,7 @@ export default function page() {
       />
       <Banners
         text="Don't Miss It - Smartphones Up to 50% Off!"
-       link="/category/mens-watches"
+        link="/category/mens-watches"
         firstImg="6"
         secondImg="4"
       />
@@ -45,7 +49,13 @@ export default function page() {
         key="mens-watches"
         slice={4}
       />
-      <ChooseCategory />
+      {recentView.length ? <RecentView recentView={recentView} /> : ""}
+      <div>
+        <h2 className="text-xl md:text-2xl lg:text-4xl  font-bold gradtext text-center w-full py-5">
+          Choose a Category
+        </h2>
+        <ChooseCategory />
+      </div>
     </div>
   );
 }

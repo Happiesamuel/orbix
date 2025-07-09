@@ -17,8 +17,7 @@ export default function MobileCatlist({
 }) {
   const [value, setValue] = useState("");
   const { products, status } = useGetProducts();
-  if (status === "pending")
-    return <div className="fle flex-col hidden fixed w-max  ">Loading...</div>;
+  if (status === "pending") return <div className=" "></div>;
   const cat = [
     {
       slug: "all",

@@ -7,11 +7,15 @@ import ProductReviews from "./ProductReviews";
 import ProductDetails from "./ProductDetails";
 import ProductBio from "./ProductBio";
 import useCart from "../hooks/useCart";
+import SingleProductLoader from "../loaders/SingleProductLoader";
+import useRecentView from "../hooks/useRecentView";
+import RecentView from "../cart/RecentView";
 
 export default function ProductLayout() {
   const { product, status } = useGetProduct();
   const { cart, setCart } = useCart();
-  if (status === "pending") return <div>Loading...</div>;
+  const { recentView } = useRecentView();
+  if (status === "pending") return <SingleProductLoader />;
   let array = [
     {
       route: "/",
@@ -46,6 +50,7 @@ export default function ProductLayout() {
       <ProductDetails cart={cart} setCart={setCart} product={product} />
       <ProductReviews rating={product.rating} reviews={product.reviews} />
       <ProductCategory category={product.category} />
+      {recentView.length ? <RecentView recentView={recentView} /> : ""}
     </div>
   );
 }

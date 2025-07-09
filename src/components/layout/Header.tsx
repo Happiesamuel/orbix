@@ -23,7 +23,9 @@ export default function Header() {
     },
     [cart, setCart]
   );
-  const quantity = cart.map((x) => x.quantity).reduce((a, b) => a + b);
+  const quantity = cart.length
+    ? cart.map((x) => x.quantity).reduce((a, b) => a + b)
+    : 0;
   return (
     <div className="flex bg-light/40 border-b border-zinc-100/80 backdrop-blur-sm z-[99] items-center justify-between  py-3 px-12 fixed w-full mx-auto my-0 max-w-[144rem]">
       <h1 className="text-dark font-[900] text-[20px]">
@@ -46,9 +48,13 @@ export default function Header() {
           href="/cart"
           className="flex items-center flex-col relative gap-0.5"
         >
-          <div className="absolute bottom-[80%] left-[60%] size-3.5 rounded-full flex item-center  justify-center text-[11px] bg-[#edcf5d]">
-            {quantity}
-          </div>
+          {quantity > 0 ? (
+            <div className="absolute bottom-[80%] left-[60%] size-3.5 rounded-full flex item-center  justify-center text-[11px] bg-[#edcf5d]">
+              {quantity}
+            </div>
+          ) : (
+            ""
+          )}
           <FaOpencart />
           <p>Cart</p>
         </Link>

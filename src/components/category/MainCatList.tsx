@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import CatList from "./CatList";
 import useGetProducts from "../hooks/useGetProducts";
+import CatListLoader from "../loaders/CatListLoader";
 
 export default function MainCatList({
   categories,
@@ -10,10 +11,7 @@ export default function MainCatList({
 }) {
   const [value, setValue] = useState("");
   const { products, status } = useGetProducts();
-  if (status === "pending")
-    return (
-      <div className="flex flex-col  fixed w-max  h-screen">Loading...</div>
-    );
+  if (status === "pending") return <CatListLoader />;
   const cat = [
     {
       slug: "all",

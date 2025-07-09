@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 export default function OrderList({
@@ -58,23 +59,29 @@ export default function OrderList({
     }
   }
   return (
-    <div className="grid grid-cols-[0.2fr_1fr_0.5fr] gap-4 border-b border-zinc-300 pb-1.5 md:pb-2 items-center">
-      <div className="bg-light rounded-md border border-zinc-300  relative flex items-center justify-center aspect-square w-[65px] h-[75px] lg:w-[90px] lg:h-[100px]">
+    <div className="grid grid-cols-[0.2fr_1fr_0.5fr] gap-2 lg:gap-4 border-b border-zinc-300 pb-1.5 md:pb-2 items-center">
+      <Link
+        href={`/product/${cat.product.id}`}
+        className="bg-light rounded-md border border-zinc-300  relative flex items-center justify-center aspect-square w-[65px] h-[75px] lg:w-[90px] lg:h-[100px]"
+      >
         <Image
           src={cat.product.images.at(0) || ""}
           className=" w-[70%] scale-80 object-center object-contain cursor-pointer"
           alt="order-img"
           fill
         />
-      </div>
+      </Link>
 
-      <div className="flex text-xs md:text-sm flex-col">
+      <Link
+        href={`/product/${cat.product.id}`}
+        className="flex text-xs md:text-sm flex-col gap-1"
+      >
         <h2 className="tetx-dark font-bold text-xs md:text-sm">
           {cat.product.title}
         </h2>
-        <p>sam</p>
-        <p>Enjoy</p>
-      </div>
+        <p className="text-xs md:text-sm">{cat.product.brand}</p>
+        <p className="text-gray-ash text-[10px]">{cat.product.sku}</p>
+      </Link>
 
       <div className=" flex flex-col gap-4 items-end justify-between">
         <h6 className="text-dark font-semibold text-xs md:text-sm">
