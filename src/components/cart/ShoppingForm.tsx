@@ -3,10 +3,15 @@ import SubTotal from "./SubTotal";
 import { Button } from "../ui/button";
 
 export default function ShoppingForm({ cart }: { cart: Cart[] }) {
-  const quantity = cart.map((x) => x.quantity).reduce((a, b) => a + b);
-  const price = cart
-    .map((x) => x.quantity * x.product.price)
-    .reduce((a, b) => a + b).toFixed(2);
+  const quantity = cart.length
+    ? cart.map((x) => x.quantity).reduce((a, b) => a + b)
+    : 0;
+  const price = cart.length
+    ? cart
+        .map((x) => x.quantity * x.product.price)
+        .reduce((a, b) => a + b)
+        .toFixed(2)
+    : "0";
   return (
     <div className="w-full">
       <div className="flex items-center justify-between border-b border-zinc-300 pb-3">
@@ -22,15 +27,19 @@ export default function ShoppingForm({ cart }: { cart: Cart[] }) {
       </div>
 
       <SubTotal price={price} />
-      <Button
-        style={{
-          background:
-            "linear-gradient(to right, black, #1a1a1a, #2a2a2a, #404040, #666666)",
-        }}
-        className=" w-full text-white text-sm mt-4 cursor-pointer "
-      >
-        Checkout (${price})
-      </Button>
+      {cart.length ? (
+        <Button
+          style={{
+            background:
+              "linear-gradient(to right, black, #1a1a1a, #2a2a2a, #404040, #666666)",
+          }}
+          className=" w-full text-white text-sm mt-4 cursor-pointer "
+        >
+          Checkout (${price})
+        </Button>
+      ) : (
+        ""
+      )}
     </div>
   );
 }

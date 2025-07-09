@@ -1,13 +1,12 @@
 import Image from "next/image";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect } from "react";
 import { Button } from "../ui/button";
-import { IoCartOutline } from "react-icons/io5";
 import useRecentView from "../hooks/useRecentView";
+import Link from "next/link";
 
 export default function ProductDetails({
   product,
   cart,
-  setCart,
 }: {
   product: Product;
   cart: Cart[];
@@ -22,68 +21,9 @@ export default function ProductDetails({
     },
     [setRecentView, product]
   );
-  const [quan, setQuan] = useState(
-    cart.find((cat) => cat.product.id === product.id)?.quantity ?? 1
-  );
+
   const cartItem = cart.find((cat) => cat.product.id === product.id);
-  useEffect(
-    function () {
-      if (!cartItem) return;
-      if (cartItem?.quantity < 1) {
-        const cat = cart.filter((x) => x.product.id !== cartItem?.product.id);
-        setCart(cat);
-        alert("Item has been removed from your cart");
-      }
-    },
-    [quan, setCart, cartItem, cart]
-  );
 
-  function inCreaseQuantity() {
-    if (!cartItem) return;
-    if (quan >= cartItem?.product.minimumOrderQuantity) {
-      alert("You have reach the maximum order for this item");
-    }
-    setQuan((q) => (q >= cartItem?.product.minimumOrderQuantity ? q : q + 1));
-    if (cartItem) {
-      setCart((prevCart) => {
-        const filtered = prevCart.filter(
-          (x) => x.product.id !== cartItem?.product.id
-        );
-        const updated = [
-          ...filtered,
-          {
-            ...cartItem,
-            quantity:
-              quan >= cartItem?.product.minimumOrderQuantity ? quan : quan + 1,
-          },
-        ];
-        return updated;
-      });
-    }
-  }
-  function deCreaseQuantity() {
-    setQuan((q) => q - 1);
-    if (cartItem) {
-      setCart((prevCart) => {
-        const filtered = prevCart.filter(
-          (x) => x.product.id !== cartItem?.product.id
-        );
-        const updated = [...filtered, { ...cartItem, quantity: quan - 1 }];
-        return updated;
-      });
-    }
-  }
-
-  function addToCart() {
-    const newObj = {
-      product: product,
-      quantity: 1,
-    };
-    setCart((i) =>
-      i.some((x: Cart) => x.product.id === product.id) ? [...i] : [...i, newObj]
-    );
-    setQuan(1);
-  }
   return (
     <div>
       <h2 className="font-bold pb-1.5 text-[#010101] text-sm">
@@ -158,9 +98,9 @@ export default function ProductDetails({
           </div>
         </div>
         <div className="w-full max-w-[320px]   lg:max-w-full md:mx-0 mx-auto lg:w-[50%] flex justify-end">
-          <div className="flex gap-3 flex-col bg-[#f2f0ea] rounded-md shadow shadow-zinc-400 h-max p-4 w-full lg:w-[50%]">
+          <div className="flex  flex-col bg-[#f2f0ea] rounded-md shadow shadow-zinc-400 h-max p-4 w-full lg:w-[50%]">
             <div className="flex  gap-5">
-              <div className="relative size-[80px]  rounded-xl bg-[#ffffff]">
+              <div className="relative size-[80px] w-[40%] rounded-md bg-[#ffffff]">
                 <Image
                   className="object-center object-contain scale-90"
                   src={product.images.at(0) || ""}
@@ -172,7 +112,7 @@ export default function ProductDetails({
                 <h3 className="text-sm md:text-base">{product.title}</h3>
                 <h4>${product.price}</h4>
                 <div className="flex items-center gap-3">
-                  <h3 className="font-light relative top-[5px] line-through text-xs md:text-sm py-3 md:py-5 text-[#a4a4a4]">
+                  <h3 className="font-light relative top-[5px] line-through text-xs md:text-sm py-3  text-[#a4a4a4]">
                     $
                     {(
                       product.price +
@@ -187,61 +127,34 @@ export default function ProductDetails({
               </div>
             </div>
 
-
-
-
-  {cartItem?.quantity ? (
-          <div className="flex gap-3 items-center">
-            <div className="flex items-center  gap-1 lg:gap-2">
-              <button
-                style={{
-                  background:
-                    "linear-gradient(to top, black, #1a1a1a, #2a2a2a, #404040, #666666)",
-                }}
-                onClick={deCreaseQuantity}
-                className="size-[20px] md:size-[25px] lg:size-[30px] flex items-center justify-center cursor-pointer pb-1 text-white rounded-full"
-              >
-                -
-              </button>
-              <p className="bg-light size-[20px] md:size-[25px] lg:size-[30px] rounded-[2px] text-xs md:text-sm flex items-center justify-center">
-                {cartItem.quantity}
-              </p>
-              <button
-                style={{
-                  background:
-                    "linear-gradient(to top, black, #1a1a1a, #2a2a2a, #404040, #666666)",
-                }}
-                onClick={inCreaseQuantity}
-                className="size-[20px] md:size-[25px] lg:size-[30px] flex items-center justify-center cursor-pointer pb-0.5 text-white rounded-full"
-              >
-                +
-              </button>
-            </div>
-            <p className="text-sm text-zinc-500">
-              ({" "}
-              <span className="font-semibold text-base text-dark">
-                {cartItem?.quantity}
-              </span>{" "}
-              item{cartItem?.quantity === 1 ? "" : "s"} added )
-            </p>
-          </div>
-        ) : (
-          <Button
-              style={{
-                background:
-                  "linear-gradient(to right, black, #1a1a1a, #2a2a2a, #404040, #666666)",
-              }}
-              onClick={addToCart}
-              className=" w-full text-white text-sm"
-            >
-              <IoCartOutline />
-              Add to Cart
-            </Button>
-        )}
-
-
-
-           
+            {cartItem?.quantity ? (
+              <>
+                <Link href="/cart">
+                  <Button
+                    style={{
+                      background:
+                        "linear-gradient(to right, black, #1a1a1a, #2a2a2a, #404040, #666666)",
+                    }}
+                    className=" w-full text-white text-sm mt-4 cursor-pointer "
+                  >
+                    Checkout (${(cartItem.quantity * product.price).toFixed(2)})
+                  </Button>
+                </Link>
+              </>
+            ) : (
+              ""
+              // <Button
+              //   style={{
+              //     background:
+              //       "linear-gradient(to right, black, #1a1a1a, #2a2a2a, #404040, #666666)",
+              //   }}
+              //   onClick={addToCart}
+              //   className=" w-full text-white text-sm"
+              // >
+              //   <IoCartOutline />
+              //   Add to Cart
+              // </Button>
+            )}
           </div>
         </div>
       </div>

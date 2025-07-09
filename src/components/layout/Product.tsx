@@ -6,11 +6,13 @@ import { FaOpencart, FaRegHeart } from "react-icons/fa";
 import useCart from "../hooks/useCart";
 
 export default function Product({
+  type = "others",
   product,
   setActive,
   active,
 }: {
   product: Product;
+  type?: string;
   active: number | null;
   setActive: Dispatch<SetStateAction<number | null>>;
 }) {
@@ -32,7 +34,7 @@ export default function Product({
     <div
       onMouseEnter={() => setActive(product.id)}
       onMouseLeave={() => setActive(null)}
-      className="flex  flex-col bg-[#ffffff] md:w-[100%] lg:w-[88%] w-full max-w-[200px]  md:max-w-[400px] shadow cursor-pointer shadow-zinc-100 border border-zinc-300 rounded-lg"
+      className="flex relative  flex-col bg-[#ffffff] md:w-[100%] lg:w-[88%] w-full max-w-[200px]  md:max-w-[400px] shadow cursor-pointer shadow-zinc-100 border border-zinc-300 rounded-lg"
     >
       <div className="relative aspect-square w-full flex items-center justify-center bg-light rounded-t-lg h-[60px] lg:h-[130px] md:h-[80px] ">
         <p className="text-[7px] md:text-[10px] lg:text-xs text-red-500 absolute right-0 top-[-1] rounded-bl-md md:round-bl-xl flex items-center justify-center w-[30px] h-[15px] md:w-[40px] md:h-[20px] lg:w-[50px] lg:h-[25px]  rounded-tr-md md:rounded-tr-md bg-white">
@@ -55,6 +57,15 @@ export default function Product({
             active === product.id ? "scale-90" : "scale-80"
           } transition-transform duration-300`}
         />
+        {type === "home" ? (
+          <div className="absolute bottom-0 right-1 z-20 inline-block transform rotate-[-5deg] border border-red-700 bg-red-700">
+            <p className="border border-white px-1 text-white text-[10px] md:text-xs">
+              {product.stock} items left
+            </p>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
       <div className="p-1 py-2 space-y-1 md:space-y-4">
         <div className="flex items-center text-dark justify-between  gap-2">
@@ -83,7 +94,7 @@ export default function Product({
             }}
             className="cursor-pointer text-[7px] md:text-[10px]  lg:text-xs flex items-center gap-2 rounded-full py-1 px-1.5  md:py-1.5 md:px-3  bg-dark text-light"
           >
-            <FaOpencart />
+            <FaOpencart className={`${!isInCart ? "" : "hidden md:block"}`} />
             {isInCart ? "Remove from Cart" : "Add to Cart"}
           </button>
         </div>
