@@ -6,6 +6,7 @@ import Header from "@/components/layout/Header";
 import NextTopLoader from "nextjs-toploader";
 import BottomLinks from "@/components/layout/BottomLinks";
 import MobileHeader from "@/components/layout/MobileHeader";
+import Footer from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -42,6 +43,7 @@ export default function RootLayout({
           <div className="block lg:hidden">
             <BottomLinks />
           </div>
+          <Footer />
         </App>
       </body>
     </html>

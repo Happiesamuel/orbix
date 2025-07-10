@@ -81,7 +81,7 @@ export default function Product({
         </p>
         <div className="flex justify-center  items-center gap-3">
           <Link
-            href={`/product/${product.id}`}
+            href={`/product/${product.sku}`}
             className="cursor-pointer text-[7px] md:text-[10px] lg:text-xs border hover:bg-transparent border-zinc-300  md:py-1.5 md:px-4  py-1 px-1.5 bg-transparent rounded-full text-dark flex items-center gap-2"
           >
             View Details

@@ -10,7 +10,7 @@ export async function getProdoucts() {
     throw new Error(err instanceof Error ? err.message : "Unknown error");
   }
 }
-export async function getProdouct(id: string) {
+export async function getProdouct(id: number | null) {
   try {
     const response = await axios.get(`${process.env.API_URL}/${id}`);
     return response.data;

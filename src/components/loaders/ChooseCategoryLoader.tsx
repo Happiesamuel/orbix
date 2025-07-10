@@ -9,7 +9,7 @@ export default function ChooseCategoryLoader() {
 duration-500 transition-all border border-zinc-300 rounded-lg py-2
             `}
     >
-      <div className={`relative aspect-auto h-20  w-full `}>
+      <div className={`relative aspect-auto h-16 md:h-20  w-full `}>
         <Skeleton className="relative size-full rounded-t-lg loader  aspect-square w-full flex items-center justify-center   ">
           <div className="circle">
             <FaOpencart className="text-zinc-500 text-xl md:text-3xl" />
