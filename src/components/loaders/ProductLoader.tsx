@@ -10,12 +10,12 @@ export default function ProductLoader() {
           <FaOpencart className="text-zinc-500 text-xl md:text-3xl" />
         </div>
       </Skeleton>
-      <div className="p-1 py-2 space-y-1 md:space-y-4">
+      <div className="p-1 py-2 space-y-1 md:space-y-2">
         <div className="flex items-center text-dark justify-between  gap-2">
           <Skeleton className="h-2 w-[70%]" />
           <Skeleton className="h-2 w-[20%]" />
         </div>
-        <Skeleton className="h-12 rounded-sm w-full" />
+        <Skeleton className="h-6 lg:h-12 rounded-sm w-full" />
         <div className="flex justify-center  items-center gap-3">
           <Skeleton className="h-4 w-full" />
           <Skeleton className="h-4 w-full" />

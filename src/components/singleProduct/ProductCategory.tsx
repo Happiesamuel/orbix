@@ -50,7 +50,7 @@ export default function ProductCategory({ category }: { category: string }) {
             </div>
 
             <Link
-              href={`/product/${item.id}`}
+              href={`/product/${item.sku}`}
               className="flex justify-between pt-2 text-[#010101] items-center"
             >
               <div className="flex items-start flex-col">

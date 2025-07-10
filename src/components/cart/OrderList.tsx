@@ -61,7 +61,7 @@ export default function OrderList({
   return (
     <div className="grid grid-cols-[0.2fr_1fr_0.5fr] gap-2 lg:gap-4 border-b border-zinc-300 pb-1.5 md:pb-2 items-center">
       <Link
-        href={`/product/${cat.product.id}`}
+        href={`/product/${cat.product.sku}`}
         className="bg-light rounded-md border border-zinc-300  relative flex items-center justify-center aspect-square w-[65px] h-[75px] lg:w-[90px] lg:h-[100px]"
       >
         <Image
@@ -73,7 +73,7 @@ export default function OrderList({
       </Link>
 
       <Link
-        href={`/product/${cat.product.id}`}
+        href={`/product/${cat.product.sku}`}
         className="flex text-xs md:text-sm flex-col gap-1"
       >
         <h2 className="tetx-dark font-bold text-xs md:text-sm">

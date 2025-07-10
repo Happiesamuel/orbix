@@ -43,7 +43,7 @@ export default function RecentView({ recentView }: { recentView: Product[] }) {
             </div>
 
             <Link
-              href={`/product/${item.id}`}
+              href={`/product/${item.sku}`}
               className="flex justify-between pt-2 text-[#010101] items-center"
             >
               <div className="flex items-start flex-col text-xs md:text-sm">

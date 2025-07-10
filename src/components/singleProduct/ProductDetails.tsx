@@ -30,7 +30,7 @@ export default function ProductDetails({
         Product details & Specifications
       </h2>
       <div className="py-4 md:py-6 gap-5 flex flex-col justify-between md:flex-row w-full">
-        <div className="w-full mx-auto md:mx-0 lg:max-w-[35%] max-w-[95%] md:w-[55%]">
+        <div className="w-full mx-auto md:mx-0 lg:max-w-[40%] max-w-[95%] md:w-[55%]">
           <div className="grid grid-cols-[1fr_0.4fr] pt-3 pl-3 rounded-t-2xl border p-2 border-zinc-300 items-center">
             <h2 className="font-bold pb-1.5 text-[#010101] text-xs md:text-sm">
               Sku:
