@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 import App from "@/components/App";
 import Header from "@/components/layout/Header";
 import NextTopLoader from "nextjs-toploader";
