@@ -3,7 +3,7 @@ import React from "react";
 
 export default function SideImage() {
   return (
-    <div className="h-full w-full flex items-center justify-center ">
+    <div className="h-full w-full  items-center justify-center hidden lg:flex">
       <div className="relative aspect-square w-[96%] flex items-center justify-center ">
         <Image
           src={"/login_1.jpg"}
