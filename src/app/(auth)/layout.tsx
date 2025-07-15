@@ -30,7 +30,8 @@ export default function RootLayout({
         <App>
           <div className="flex h-screen">
             <SideImage />
-            <main className=" w-full">
+
+            <main className=" w-full flex items-center justify-center ">
               {children}
             </main>
           </div>
