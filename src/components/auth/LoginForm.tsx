@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import Field from "./Field";
 import { loginFormSchema } from "@/lib/schemas";
+import Link from "next/link";
 
 export function LoginForm() {
   // 1. Define your form.
@@ -23,7 +24,10 @@ export function LoginForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3 w-[70%]">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-3 pt-4 w-full md:w-[70%]"
+      >
         <Field
           name="username"
           type="text"
@@ -39,8 +43,11 @@ export function LoginForm() {
             label="Password"
             control={form.control}
           />
-          <div className="flex items-end justify-end py-2">
+          <div className="flex items-end justify-between py-2">
             <p className="text-xs ">Forgotten Password?</p>
+            <Link href="/sign-up" className="text-xs ">
+              Don&apos;t have an account? Sign up
+            </Link>
           </div>
         </div>
         <Button
