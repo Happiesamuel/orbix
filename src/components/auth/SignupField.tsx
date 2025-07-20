@@ -8,16 +8,16 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Control, FieldPath } from "react-hook-form";
-import { loginFormSchema } from "@/lib/schemas";
+import { signupFormSchema } from "@/lib/schemas";
 import z from "zod";
 interface FieldType {
   type: string;
-  control: Control<z.infer<typeof loginFormSchema>>;
-  name: FieldPath<z.infer<typeof loginFormSchema>>;
+  control: Control<z.infer<typeof signupFormSchema>>;
+  name: FieldPath<z.infer<typeof signupFormSchema>>;
   label: string;
   placeholder: string;
 }
-export default function Field({
+export default function SignupField({
   name,
   label,
   placeholder,

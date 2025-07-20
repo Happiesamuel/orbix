@@ -8,18 +8,26 @@ import { Form } from "@/components/ui/form";
 import Field from "./Field";
 import { loginFormSchema } from "@/lib/schemas";
 import Link from "next/link";
+import { useLogin } from "../hooks/auth/useLogin";
+import ButtonLoader from "../loaders/ButtonLoader";
+import { toast } from "sonner";
 
 export function LoginForm() {
-  // 1. Define your form.
+  const { login, status } = useLogin();
   const form = useForm<z.infer<typeof loginFormSchema>>({
     resolver: zodResolver(loginFormSchema),
   });
 
-  // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof loginFormSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+    login(values, {
+      onSuccess: () => console.log("sfsf"),
+      onError: (err) =>
+        toast('Error logging in', {
+          description: err.message,
+          duration: 4000,
+          closeButton: true,
+        }),
+    });
   }
 
   return (
@@ -29,10 +37,10 @@ export function LoginForm() {
         className="space-y-3 pt-4 w-full md:w-[70%]"
       >
         <Field
-          name="username"
-          type="text"
-          placeholder="Enter your username"
-          label="Username"
+          name="email"
+          type="email"
+          placeholder="Enter your email"
+          label="Email"
           control={form.control}
         />
         <div>
@@ -58,7 +66,7 @@ export function LoginForm() {
           type="submit"
           className="text-white w-full"
         >
-          Submit
+          {status === "pending" ? <ButtonLoader /> : "Submit"}
         </Button>
       </form>
     </Form>

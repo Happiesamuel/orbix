@@ -4,18 +4,24 @@ import { Button } from "../ui/button";
 
 export default function OtherLoginOption({
   type,
-  name,color
+  name,
+  color,
+  content,
+  onclick,
 }: {
   name: string;
   type: string;
-  color:string
+  color: string;
+  content: string;
+  onclick(): void;
 }) {
   return (
     <Button
       style={{
         background: color,
       }}
-      className="flex items-center gap-2 text-xs "
+      onClick={onclick}
+      className="flex items-center gap-2 text-xs cursor-pointer"
     >
       <Image
         width={20}
@@ -23,7 +29,9 @@ export default function OtherLoginOption({
         src={`https://authjs.dev/img/providers/${type}.svg`}
         alt="google image"
       />
-      <p className="text-zinc-200">Login with {name}</p>
+      <p className="text-zinc-200">
+        {content} with {name}
+      </p>
     </Button>
   );
 }

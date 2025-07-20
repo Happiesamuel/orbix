@@ -4,6 +4,7 @@ import "../globals.css";
 import App from "@/components/App";
 import NextTopLoader from "nextjs-toploader";
 import SideImage from "@/components/auth/SideImage";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -28,12 +29,13 @@ export default function RootLayout({
       >
         <NextTopLoader color="#121212" height={4} showSpinner={false} />
         <App>
-          <div className="flex h-screen">
+          <div className="flex min-h-screen py- ">
             <SideImage />
-
-            <main className=" w-full flex items-center justify-center ">
+            <div className="hidden lg:block w-[50%]" />
+            <main className="w-full lg:w-[50%] flex items-center py-4 justify-center ">
               {children}
             </main>
+            <Toaster position="top-center" />
           </div>
         </App>
       </body>
