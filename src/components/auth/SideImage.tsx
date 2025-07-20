@@ -1,13 +1,23 @@
+"use client";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 export default function SideImage() {
+  const pathname = usePathname();
+  const slug = pathname.slice(1);
   return (
-    <div className="h-full w-full  items-center justify-center hidden lg:flex">
-      <div className="relative aspect-square w-[98%] flex items-center justify-center ">
+    <div className="h-full w-[50%] fixed items-center  justify-center hidden lg:flex">
+      <div className="relative aspect-square w-[98%] h-[98%] flex items-center justify-center ">
         <Image
-          src={"/login_3.jpg"}
+          src={`/login_${
+            slug === "login" ? "3" : slug === "otp" ? "1" : "2"
+          }.jpg`}
           alt="img"
+          placeholder="blur"
+          blurDataURL={`/login_${
+            slug === "login" ? "3" : slug === "otp" ? "1" : "2"
+          }.jpg`}
           fill
           className="object-center   object-cover rounded-2xl"
           quality={100}
@@ -17,7 +27,8 @@ export default function SideImage() {
             Hey there, Welcome to Orbix!
           </h3>
           <p className="text-base text-zinc-300">
-            We&apos;re glad you&apos;re here. Log in to continue shopping and
+            We&apos;re glad you&apos;re here.{" "}
+            {slug === "login" ? "Log in" : "Sign up"} to continue shopping and
             managing your account.
           </p>
         </div>

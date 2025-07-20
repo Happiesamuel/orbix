@@ -7,6 +7,7 @@ import NextTopLoader from "nextjs-toploader";
 import BottomLinks from "@/components/layout/BottomLinks";
 import MobileHeader from "@/components/layout/MobileHeader";
 import Footer from "@/components/layout/Footer";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -40,6 +41,7 @@ export default function RootLayout({
           <main className="lg:mx-12 md:mx-8 mx-4 py-[65px] min-h-screen">
             {children}
           </main>
+          <Toaster position="top-center"  />
           <div className="block lg:hidden">
             <BottomLinks />
           </div>
