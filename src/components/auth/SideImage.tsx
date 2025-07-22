@@ -11,12 +11,28 @@ export default function SideImage() {
       <div className="relative aspect-square w-[98%] h-[98%] flex items-center justify-center ">
         <Image
           src={`/login_${
-            slug === "login" ? "3" : slug === "otp" ? "1" : "2"
+            slug === "login"
+              ? "3"
+              : slug === "verify"
+                ? "4"
+                : slug === "forgot-password"
+                  ? "2"
+                  : slug === "reset-password"
+                    ? "5"
+                    : "1"
           }.jpg`}
           alt="img"
           placeholder="blur"
           blurDataURL={`/login_${
-            slug === "login" ? "3" : slug === "otp" ? "1" : "2"
+            slug === "login"
+              ? "3"
+              : slug === "verify"
+                ? "4"
+                : slug === "forgot-password"
+                  ? "2"
+                  : slug === "reset-password"
+                    ? "5"
+                    : "1"
           }.jpg`}
           fill
           className="object-center   object-cover rounded-2xl"

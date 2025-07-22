@@ -6,6 +6,22 @@ export const loginFormSchema = z.object({
     message: "Password must be at least 6 characters.",
   }),
 });
+export const forgottenPasswordFormSchema = z.object({
+  email: z.string().email({ message: "Please enter a valid email address" }),
+});
+export const recoverPasswordFormSchema = z
+  .object({
+    password: z.string().min(6, {
+      message: "Password must be at least 6 characters.",
+    }),
+    confirmPassword: z.string().min(6, {
+      message: "Password must be at least 6 characters.",
+    }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"], // Set error on confirmPassword field
+  });
 export const signupFormSchema = z
   .object({
     username: z.string().min(2, {
