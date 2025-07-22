@@ -4,7 +4,10 @@ import axios from "axios";
 import { signIn } from "./auth";
 import { ID, Query } from "node-appwrite";
 import { createAdminClient, createSessionClient } from "./appwrite";
-
+import { Resend } from "resend";
+import { generateOTP } from "./utils";
+import Plunk from "@plunk/node";
+const plunk = new Plunk(process.env.PLUNK_API_KEY!);
 export async function loginWithCredentials({
   email,
   password,
@@ -46,6 +49,17 @@ export async function getUserViaEmail(email: string) {
   return result.users[0]; // First match
 }
 
+// export async function getAllUsers() {
+//   try {
+//     const users = createAdminClient();
+//     const response = await users.list(); // optional: users.list({ search: "", limit: 100, offset: 0 })
+
+//     return response.users; // returns array of users
+//   } catch (error) {
+//     console.error("Failed to fetch users:", error);
+//     throw error;
+//   }
+// }
 export async function getLoggedInUser(email: string, password: string) {
   try {
     const { account } = await createSessionClient();
@@ -55,17 +69,7 @@ export async function getLoggedInUser(email: string, password: string) {
   }
 }
 
-export async function getAllUsers() {
-  try {
-    const { users } = await createAdminClient();
-    const response = await users.list(); // optional: users.list({ search: "", limit: 100, offset: 0 })
-
-    return response.users; // returns array of users
-  } catch (error) {
-    console.error("Failed to fetch users:", error);
-    throw error;
-  }
-}
+// action.ts
 
 export async function createUser({
   email,
@@ -79,81 +83,106 @@ export async function createUser({
   try {
     const { account } = await createAdminClient();
     const user = await account.create(ID.unique(), email, password, name);
-    await addGuest({
+    const guests = await addGuest({
       email: user.email,
       id: user.$id,
-      name: user.name,
       password: password,
     });
-
+    const resend = new Resend(process.env.RESEND_API_KEY);
+    const otp = generateOTP();
+    await addOTPTodoc(guests.$id, otp);
+    await resend.emails.send({
+      from: "Orbix Team <onboarding@resend.dev>",
+      to: user.email,
+      subject: "Verify your account",
+      html: `<p>Your OTP code is: <strong>${otp}</strong></p><p>Expires in 5 minutes</p>`,
+    });
     return user;
   } catch (err) {
     throw new Error(err instanceof Error ? err.message : "Unknown error");
   }
 }
-// export async function updateOtp({
-//   id,
-//   obj,
-// }: {
-//   id: string;
-//   obj: { expiresAt: string; otp: string };
-// }) {
-//   const { database } = await createAdminClient();
-//   const docs = await database.listDocuments(
-//     process.env.APPWRITE_DATABASE_ID!,
-//     process.env.APPWRITE_OTP_ID!,
-//     [Query.equal("guests", id)]
-//   );
-//   const guest = docs.documents[0];
-//   if (docs.total === 0) {
-//     throw new Error("No OTP document found for this guest");
-//   }
 
-//   const documentId = guest.$id;
+export async function updateOtp({
+  id,
+  obj,
+}: {
+  id: string;
+  obj: { expiresAt: string; otp: string };
+}) {
+  // const resend = new Resend(process.env.RESEND_API_KEY);
 
-//   const email = guest.guests.email; // adjust this if path is different
+  const { database } = await createAdminClient();
+  const docs = await database.listDocuments(
+    process.env.APPWRITE_DATABASE_ID!,
+    process.env.APPWRITE_OTP_ID!,
+    [Query.equal("guests", id)]
+  );
+  const guest = docs.documents[0];
+  if (docs.total === 0) {
+    throw new Error("No OTP document found for this guest");
+  }
 
-//   // sgMail
-//   //   .send(message)
-//   //   .then(() => console.log("sent...."))
-//   //   .catch((err) => console.log(err.message));
-//   // await resend.emails.send({
-//   //   from: "Orbix Team <onboarding@resend.dev>",
-//   //   to: guest.guests.email,
-//   // subject: "Verify your account",
-//   // html: `<p>Your OTP code is: <strong>${obj.otp}</strong></p><p>Expires in 5 minutes</p>`,
-//   // });
-//   const updated = await database.updateDocument(
-//     process.env.APPWRITE_DATABASE_ID!,
-//     process.env.APPWRITE_OTP_ID!,
-//     documentId,
-//     obj
-//   );
+  const documentId = guest.$id;
 
-//   return updated;
-// }
+  const email = guest.guests.email; // adjust this if path is different
 
-// export async function generateNewOtp({
-//   id,
-//   email,
-// }: {
-//   email: string;
-//   id: string;
-// }) {
-//   try {
-//     const resend = new Resend(process.env.RESEND_API_KEY);
-//     const otp = generateOTP();
-//     await addOTPTodoc(id, otp);
-//     await resend.emails.send({
-//       from: "Orbix Team <onboarding@resend.dev>",
-//       to: email,
-//       subject: "Verify your account",
-//       html: `<p>Your OTP code is: <strong>${otp}</strong></p><p>Expires in 5 minutes</p>`,
-//     });
-//   } catch (err) {
-//     throw new Error(err instanceof Error ? err.message : "Unknown error");
-//   }
-// }
+  const html = `
+    <div style="font-family: sans-serif; font-size: 16px;">
+      <p>Hi there 👋,</p>
+      <p>Your OTP code is: <strong>${obj.otp}</strong></p>
+      <p>This code will expire in 5 minutes.</p>
+      <p>— Orbix Team</p>
+    </div>
+  `;
+
+  await plunk.emails.send({
+    to: email,
+    subject: "Complete your verification",
+    body: html,
+  });
+
+  // sgMail
+  //   .send(message)
+  //   .then(() => console.log("sent...."))
+  //   .catch((err) => console.log(err.message));
+  // await resend.emails.send({
+  //   from: "Orbix Team <onboarding@resend.dev>",
+  //   to: guest.guests.email,
+  // subject: "Verify your account",
+  // html: `<p>Your OTP code is: <strong>${obj.otp}</strong></p><p>Expires in 5 minutes</p>`,
+  // });
+  const updated = await database.updateDocument(
+    process.env.APPWRITE_DATABASE_ID!,
+    process.env.APPWRITE_OTP_ID!,
+    documentId,
+    obj
+  );
+
+  return updated;
+}
+
+export async function generateNewOtp({
+  id,
+  email,
+}: {
+  email: string;
+  id: string;
+}) {
+  try {
+    const resend = new Resend(process.env.RESEND_API_KEY);
+    const otp = generateOTP();
+    await addOTPTodoc(id, otp);
+    await resend.emails.send({
+      from: "Orbix Team <onboarding@resend.dev>",
+      to: email,
+      subject: "Verify your account",
+      html: `<p>Your OTP code is: <strong>${otp}</strong></p><p>Expires in 5 minutes</p>`,
+    });
+  } catch (err) {
+    throw new Error(err instanceof Error ? err.message : "Unknown error");
+  }
+}
 
 export async function getGuestViaUserId(userId: string) {
   const { database } = await createAdminClient();
@@ -198,12 +227,10 @@ export async function addGuest({
   email,
   id,
   password,
-  name,
 }: {
   email: string;
   id: string;
   password: string;
-  name: string;
 }) {
   const { database } = await createAdminClient();
   const response = await database.createDocument(
@@ -216,7 +243,6 @@ export async function addGuest({
       isVerified: false,
       image: "",
       userId: id,
-      name: name,
     }
   );
   return response;

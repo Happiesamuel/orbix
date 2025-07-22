@@ -11,23 +11,59 @@ import Link from "next/link";
 import { useLogin } from "../hooks/auth/useLogin";
 import ButtonLoader from "../loaders/ButtonLoader";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { getGuestViaEmail } from "@/lib/action";
+import { useState } from "react";
 
 export function LoginForm() {
+  const [load, setLoad] = useState(false);
   const { login, status } = useLogin();
+  const router = useRouter();
   const form = useForm<z.infer<typeof loginFormSchema>>({
     resolver: zodResolver(loginFormSchema),
   });
 
-  function onSubmit(values: z.infer<typeof loginFormSchema>) {
-    login(values, {
-      onSuccess: () => console.log("sfsf"),
-      onError: (err) =>
-        toast('Error logging in', {
-          description: err.message,
+  async function onSubmit(values: z.infer<typeof loginFormSchema>) {
+    try {
+      setLoad(true);
+      const existingUser = await getGuestViaEmail(values.email);
+      setLoad(false);
+      if (!existingUser) {
+        return toast("Error logging in", {
+          description: "User not found",
           duration: 4000,
           closeButton: true,
-        }),
-    });
+        });
+      } else if (!existingUser.isVerified) {
+        localStorage.setItem("guest", JSON.stringify(existingUser));
+        router.push("/otp");
+      } else if (existingUser.password !== values.password) {
+        return toast("Error logging in", {
+          description: "User Password is incorrect!",
+          duration: 4000,
+          closeButton: true,
+        });
+      } else
+        login(values, {
+          onSuccess: () => {
+            toast("Signed in successfully", {
+              description: "User is signed in!",
+              duration: 4000,
+              closeButton: true,
+            });
+            router.push("/");
+          },
+          onError: (err) =>
+            toast("Error logging in", {
+              description: err.message,
+              duration: 4000,
+              closeButton: true,
+            }),
+        });
+    } catch (error) {
+      setLoad(false);
+      console.log(error);
+    }
   }
 
   return (
@@ -66,7 +102,7 @@ export function LoginForm() {
           type="submit"
           className="text-white w-full"
         >
-          {status === "pending" ? <ButtonLoader /> : "Submit"}
+          {status === "pending" || load ? <ButtonLoader /> : "Submit"}
         </Button>
       </form>
     </Form>

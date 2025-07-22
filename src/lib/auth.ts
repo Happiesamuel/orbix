@@ -21,26 +21,43 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
     Credentials({
       credentials: {
-        username: { label: "Username" },
-        password: { label: "Password", type: "password" },
+        email: {
+          label: "Email",
+          type: "text",
+          placeholder: "Enter your email",
+        },
+        password: {
+          label: "Password",
+          type: "password",
+          placeholder: "Enter your password",
+        },
       },
       authorize: async (credentials): Promise<User | null> => {
         try {
-          console.log(credentials);
-          return {
-            id: "dfsdfsd",
-            name: "sffsfs",
-            email: "sfsfsf",
-          };
-        } catch (err) {
-          if (err) return null;
+          if (typeof credentials.email === "string") {
+            const existingUser = await getUserViaEmail(credentials.email);
+            if (!existingUser) {
+              throw new Error("User not found.");
+            }
+            return {
+              id: existingUser["$id"],
+              name: existingUser.name,
+              email: existingUser.email,
+            };
+          }
+          return null;
+        } catch (error) {
+          console.log(error);
+          return null;
         }
-        return null;
       },
     }),
   ],
 
   callbacks: {
+    // authorized: async ({ auth }) => {
+    //   return !!auth?.user;
+    // },
     async signIn({ user }) {
       try {
         if (user.email) {

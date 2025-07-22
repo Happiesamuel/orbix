@@ -11,7 +11,18 @@ export const signupFormSchema = z
     username: z.string().min(2, {
       message: "Username must be at least 2 characters.",
     }),
+    // country: z.string({
+    //   required_error: "Please select a country.",
+    // }),
     email: z.string().email({ message: "Please enter a valid email address" }),
+    // tel: z
+    //   .string()
+    //   .min(7, "Phone number is too short")
+    //   .max(15, "Phone number is too long")
+    //   .regex(
+    //     /^\d+$/,
+    //     "Phone number must contain digits only (no spaces or symbols)"
+    //   ),
     password: z.string().min(6, {
       message: "Password must be at least 6 characters.",
     }),

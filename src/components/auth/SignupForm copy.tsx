@@ -1,4 +1,5 @@
 "use client";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -12,7 +13,6 @@ import ButtonLoader from "../loaders/ButtonLoader";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { getGuestViaUserId } from "@/lib/action";
-import { account } from "@/lib/appwriteClient";
 
 export function SignupForm() {
   const { create, status } = useCreateUser();
@@ -31,17 +31,12 @@ export function SignupForm() {
       onSuccess: async (data) => {
         const guest = await getGuestViaUserId(data.$id);
         localStorage.setItem("guest", JSON.stringify(guest));
-        await account.createEmailPasswordSession(values.email, values.password);
-        await account.createVerification(
-          `${process.env.NEXT_PUBLIC_URL!}/verify`
-        );
-
         toast("User created successfully", {
-          description: "A verification link has been sent to your email address.",
+          description: "An OTP has been sent to your email address.",
           duration: 4000,
           closeButton: true,
         });
-        router.push("/login");
+        router.push("/otp");
       },
       onError: (err) =>
         toast("Error Signing up", {
@@ -72,7 +67,6 @@ export function SignupForm() {
           label="Email"
           control={form.control}
         />
-
         <SignupField
           name="password"
           type="password"
