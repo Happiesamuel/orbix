@@ -181,7 +181,14 @@ export async function updateGuest({
   obj,
 }: {
   id: string;
-  obj: { isVerified: boolean };
+  obj: {
+    isVerified?: boolean;
+    password?: string;
+    email?: string;
+    name?: string;
+    image?: string;
+    userId?: string;
+  };
 }) {
   const { database } = await createAdminClient();
   const updatedDoc = await database.updateDocument(

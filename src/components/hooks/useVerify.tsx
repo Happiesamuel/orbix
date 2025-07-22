@@ -1,16 +1,12 @@
 "use client";
 import { account } from "@/lib/appwriteClient";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
-import AuthHeader from "./AuthHeader";
-import { Button } from "../ui/button";
-import ButtonLoader from "../loaders/ButtonLoader";
-import { getGuestViaUserId, updateGuest } from "@/lib/action";
 
-export default function VerifyPage() {
-  const searchParams = useSearchParams();
+export function useVerify(push: string) {
   const [verify, setVerify] = useState(false);
+  const searchParams = useSearchParams();
   const userId = searchParams.get("userId");
   const secret = searchParams.get("secret");
   const router = useRouter();
@@ -24,11 +20,6 @@ export default function VerifyPage() {
     try {
       setVerify(true);
       await account.updateVerification(userId, secret);
-      const guest = await getGuestViaUserId(userId);
-      await updateGuest({
-        id: guest.$id,
-        obj: { isVerified: true },
-      });
       setVerify(false);
 
       toast("Email verified successfully!", {
@@ -36,7 +27,7 @@ export default function VerifyPage() {
         duration: 4000,
         closeButton: true,
       });
-      router.push("/login");
+      router.push(push);
     } catch (err) {
       const error = err as Error;
 
@@ -49,20 +40,5 @@ export default function VerifyPage() {
     }
   }
 
-  return (
-    <div className="w-[90%]  flex items-center justify-center flex-col gap-2">
-      <AuthHeader />
-      <Button
-        onClick={verifyEmail}
-        style={{
-          background:
-            "linear-gradient(to top, black, #1a1a1a, #2a2a2a, #404040, #666666)",
-        }}
-        type="submit"
-        className="text-white w-ful px-8 mt-4"
-      >
-        {verify ? <ButtonLoader /> : "Verifiy your Email"}
-      </Button>
-    </div>
-  );
+  return { verifyEmail, verify };
 }

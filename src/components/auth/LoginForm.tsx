@@ -34,9 +34,6 @@ export function LoginForm() {
           duration: 4000,
           closeButton: true,
         });
-      } else if (!existingUser.isVerified) {
-        localStorage.setItem("guest", JSON.stringify(existingUser));
-        router.push("/otp");
       } else if (existingUser.password !== values.password) {
         return toast("Error logging in", {
           description: "User Password is incorrect!",
@@ -88,8 +85,10 @@ export function LoginForm() {
             control={form.control}
           />
           <div className="flex items-end justify-between py-2">
-            <p className="text-xs ">Forgotten Password?</p>
-            <Link href="/sign-up" className="text-xs ">
+            <Link href="/forgot-password" className="text-xs cursor-pointer">
+              Forgotten Password?
+            </Link>
+            <Link href="/sign-up" className="text-xs cursor-pointer">
               Don&apos;t have an account? Sign up
             </Link>
           </div>

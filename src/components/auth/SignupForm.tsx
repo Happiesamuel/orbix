@@ -11,7 +11,6 @@ import { useCreateUser } from "../hooks/auth/useCreateUser";
 import ButtonLoader from "../loaders/ButtonLoader";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { getGuestViaUserId } from "@/lib/action";
 import { account } from "@/lib/appwriteClient";
 
 export function SignupForm() {
@@ -22,34 +21,43 @@ export function SignupForm() {
   });
 
   async function onSubmit(values: z.infer<typeof signupFormSchema>) {
-    const newVal = {
-      email: values.email,
-      password: values.password,
-      name: values.username,
-    };
-    create(newVal, {
-      onSuccess: async (data) => {
-        const guest = await getGuestViaUserId(data.$id);
-        localStorage.setItem("guest", JSON.stringify(guest));
-        await account.createEmailPasswordSession(values.email, values.password);
-        await account.createVerification(
-          `${process.env.NEXT_PUBLIC_URL!}/verify`
-        );
-
-        toast("User created successfully", {
-          description: "A verification link has been sent to your email address.",
-          duration: 4000,
-          closeButton: true,
-        });
-        router.push("/login");
-      },
-      onError: (err) =>
-        toast("Error Signing up", {
-          description: err.message,
-          duration: 4000,
-          closeButton: true,
-        }),
-    });
+    try {
+      const newVal = {
+        email: values.email,
+        password: values.password,
+        name: values.username,
+      };
+      create(newVal, {
+        onSuccess: async () => {
+          await account.createEmailPasswordSession(
+            values.email,
+            values.password
+          );
+          await account.createVerification(
+            `${process.env.NEXT_PUBLIC_URL!}/verify`
+          );
+          toast("User created successfully", {
+            description:
+              "A verification link has been sent to your email address.",
+            duration: 4000,
+            closeButton: true,
+          });
+          router.push("/login");
+        },
+        onError: (err) =>
+          toast("Error Signing up", {
+            description: err.message,
+            duration: 4000,
+            closeButton: true,
+          }),
+      });
+    } catch (error) {
+      toast("Error Signing up", {
+        description: (error as Error).message,
+        duration: 4000,
+        closeButton: true,
+      });
+    }
   }
 
   return (
