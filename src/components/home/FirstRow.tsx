@@ -22,7 +22,7 @@ export default function FirstRow({
   const [active, setActive] = useState<number | null>(null);
   if (status === "pending")
     return (
-      <div className="py-3 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full gap-y-4 lg:gap-y-6 gap-2 md:gap-4 place-items-center pt-2 pb-4">
+      <div className="py-3 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full gap-y-4 lg:gap-y-6 gap-2 md:gap-4 place-items-center pt-2 pb-4 lg:pt-2">
         {Array.from({ length: 8 }).map((_, i) => (
           <ProductLoader key={i + 1} />
         ))}
