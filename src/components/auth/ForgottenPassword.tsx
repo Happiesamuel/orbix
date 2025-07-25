@@ -15,24 +15,57 @@ import {
 import { forgottenPasswordFormSchema } from "@/lib/schemas";
 import ButtonLoader from "../loaders/ButtonLoader";
 import { toast } from "sonner";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input } from "../ui/input";
 import { account } from "@/lib/appwriteClient";
 
-export function ForgottenPassowrd() {
+const COOLDOWN_DURATION = 300; // in seconds
+
+export function ForgottenPassword() {
   const [load, setLoad] = useState(false);
+  const [cooldown, setCooldown] = useState(0);
+
   const form = useForm<z.infer<typeof forgottenPasswordFormSchema>>({
     resolver: zodResolver(forgottenPasswordFormSchema),
+    defaultValues: { email: "" },
   });
+
+  useEffect(() => {
+    const endTimestamp = localStorage.getItem("passwordRecoveryCooldownEnd");
+    if (endTimestamp) {
+      const remaining = Math.floor(
+        (parseInt(endTimestamp) - Date.now()) / 1000
+      );
+      if (remaining > 0) {
+        setCooldown(remaining);
+      } else {
+        localStorage.removeItem("passwordRecoveryCooldownEnd");
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (cooldown > 0) {
+      timer = setTimeout(() => setCooldown(cooldown - 1), 1000);
+    } else {
+      localStorage.removeItem("passwordRecoveryCooldownEnd");
+    }
+    return () => clearTimeout(timer);
+  }, [cooldown]);
 
   async function onSubmit(values: z.infer<typeof forgottenPasswordFormSchema>) {
     try {
       setLoad(true);
-      await account.createRecovery(
-        values.email,
-        `${process.env.NEXT_PUBLIC_URL!}/reset-password`
-      );
+      const resetURL = `${process.env.NEXT_PUBLIC_URL ?? "https://oorbix.vercel.app"}/reset-password`;
+      await account.createRecovery(values.email, resetURL);
       setLoad(false);
+
+      // Set cooldown
+      const end = Date.now() + COOLDOWN_DURATION * 1000;
+      localStorage.setItem("passwordRecoveryCooldownEnd", end.toString());
+      setCooldown(COOLDOWN_DURATION);
+
       toast("Recovery email sent", {
         description: "Please check your email for the recovery link.",
         duration: 4000,
@@ -48,6 +81,12 @@ export function ForgottenPassowrd() {
       });
     }
   }
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60).toString().padStart(2, "0");
+    const secs = (seconds % 60).toString().padStart(2, "0");
+    return `${mins}:${secs}`;
+  };
 
   return (
     <Form {...form}>
@@ -69,20 +108,20 @@ export function ForgottenPassowrd() {
                   {...field}
                 />
               </FormControl>
-
               <FormMessage />
             </FormItem>
           )}
         />
         <Button
+          type="submit"
+          disabled={load || cooldown > 0}
+          className="text-white w-full"
           style={{
             background:
               "linear-gradient(to top, black, #1a1a1a, #2a2a2a, #404040, #666666)",
           }}
-          type="submit"
-          className="text-white w-full"
         >
-          {load ? <ButtonLoader /> : "Submit"}
+          {load ? <ButtonLoader /> : cooldown > 0 ? `Wait ${formatTime(cooldown)}` : "Submit"}
         </Button>
       </form>
     </Form>

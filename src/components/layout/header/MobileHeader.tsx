@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
-import { Input } from "../ui/input";
 import { IoSearch } from "react-icons/io5";
 import { useRouter } from "next/navigation";
+import { Input } from "@/components/ui/input";
 
 export default function MobileHeader() {
   const router = useRouter();

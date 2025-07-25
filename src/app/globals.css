@@ -85,6 +85,19 @@
   display: none !important;
 }
 
+@keyframes spin360 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rotate {
+  animation: spin360 10s linear infinite;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

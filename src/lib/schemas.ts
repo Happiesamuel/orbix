@@ -2,8 +2,8 @@ import z from "zod";
 
 export const loginFormSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address" }),
-  password: z.string().min(6, {
-    message: "Password must be at least 6 characters.",
+  password: z.string().min(8, {
+    message: "Password must be at least 8 characters.",
   }),
 });
 export const forgottenPasswordFormSchema = z.object({
@@ -11,11 +11,24 @@ export const forgottenPasswordFormSchema = z.object({
 });
 export const recoverPasswordFormSchema = z
   .object({
-    password: z.string().min(6, {
-      message: "Password must be at least 6 characters.",
+    password: z.string().min(8, {
+      message: "Password must be at least 8 characters.",
     }),
-    confirmPassword: z.string().min(6, {
-      message: "Password must be at least 6 characters.",
+    confirmPassword: z.string().min(8, {
+      message: "Password must be at least 8 characters.",
+    }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"], // Set error on confirmPassword field
+  });
+export const setPasswordFormSchema = z
+  .object({
+    password: z.string().min(8, {
+      message: "Password must be at least 8 characters.",
+    }),
+    confirmPassword: z.string().min(8, {
+      message: "Password must be at least 8 characters.",
     }),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -39,11 +52,11 @@ export const signupFormSchema = z
     //     /^\d+$/,
     //     "Phone number must contain digits only (no spaces or symbols)"
     //   ),
-    password: z.string().min(6, {
-      message: "Password must be at least 6 characters.",
+    password: z.string().min(8, {
+      message: "Password must be at least 8 characters.",
     }),
-    confirmPassword: z.string().min(6, {
-      message: "Password must be at least 6 characters.",
+    confirmPassword: z.string().min(8, {
+      message: "Password must be at least 8 characters.",
     }),
   })
   .refine((data) => data.password === data.confirmPassword, {
