@@ -4,6 +4,8 @@ import Banners from "@/components/home/Banners";
 import ChooseCategory from "@/components/home/ChooseCategory";
 import FirstRow from "@/components/home/FirstRow";
 import useRecentView from "@/components/hooks/useRecentView";
+import { signOutAction } from "@/lib/action";
+
 import React from "react";
 
 export default function Page() {
@@ -55,6 +57,9 @@ export default function Page() {
           Choose a Category
         </h2>
         <ChooseCategory />
+        <p className="lg:hidden" onClick={async () => await signOutAction()}>
+          sign
+        </p>
       </div>
     </div>
   );

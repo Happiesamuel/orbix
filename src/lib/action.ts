@@ -1,7 +1,7 @@
 "use server";
 
 import axios from "axios";
-import { signIn } from "./auth";
+import { signIn, signOut } from "./auth";
 import { ID, Query } from "node-appwrite";
 import { createAdminClient, createSessionClient } from "./appwrite";
 
@@ -13,9 +13,10 @@ export async function loginWithCredentials({
   password: string;
 }) {
   const result = await signIn("credentials", {
+    redirect: false,
     email,
     password,
-    redirect: false,
+    callbackUrl: "/",
   });
 
   if (result?.error) {
@@ -29,11 +30,24 @@ export async function loginWithCredentials({
   return { success: false };
 }
 
-export async function signInWithGoogleAction() {
-  await signIn("google");
+export async function signOutAction() {
+  await signOut({ redirectTo: "/login" });
 }
-export async function signInWithFacebookAction() {
-  await signIn("facebook");
+
+// export async function signInWithGoogleAction() {
+//   await signIn("google", { redirectTo: "/" });
+// }
+export async function loginInWithGoogleAction() {
+  await signIn("google", { callbackUrl: "/?from=login", redirectTo: "/" });
+}
+export async function loginInWithFacebookAction() {
+  await signIn("facebook", { callbackUrl: "/?from=login", redirectTo: "/" });
+}
+export async function signUpWithGoogleAction() {
+  await signIn("google", { callbackUrl: "/?from=sign-up" });
+}
+export async function signUpWithFacebookAction() {
+  await signIn("facebook", { callbackUrl: "/?from=sign-up" });
 }
 
 export async function getUserViaEmail(email: string) {
@@ -43,7 +57,7 @@ export async function getUserViaEmail(email: string) {
 
   if (result.total === 0) return null;
 
-  return result.users[0]; // First match
+  return result.users[0];
 }
 
 export async function getLoggedInUser(email: string, password: string) {
@@ -91,6 +105,38 @@ export async function createUser({
     throw new Error(err instanceof Error ? err.message : "Unknown error");
   }
 }
+
+export async function createUserWithoutPassword({
+  email,
+  name,
+}: {
+  email: string;
+  name: string;
+}) {
+  try {
+    const { users } = await createAdminClient();
+
+    const user = await users.create(
+      ID.unique(),
+      email,
+      undefined,
+      undefined,
+      name
+    );
+
+    await addGuest({
+      email: user.email,
+      id: user.$id,
+      name: user.name,
+      password: "noPassword",
+    });
+
+    return user;
+  } catch (err) {
+    throw new Error(err instanceof Error ? err.message : "Unknown error");
+  }
+}
+
 // export async function updateOtp({
 //   id,
 //   obj,
@@ -255,66 +301,6 @@ export async function getOtp() {
     throw new Error(err instanceof Error ? err.message : "Unknown error");
   }
 }
-// export async function loginUser({
-//   email,
-//   password,
-// }: {
-//   email: string;
-//   password: string;
-// }) {
-//   try {
-//     const { account } = await createAdminClient();
-//     const session = await account.createEmailPasswordSession(email, password);
-//     console.log(session);
-//     return session;
-//   } catch (err) {
-//     throw new Error(err instanceof Error ? err.message : "Unknown error");
-//   }
-// }
-
-// await databases.createDocument(
-//   "your-database-id",
-//   "user_otp",
-//   ID.unique(),
-//   {
-//     userId: user.$id,
-//     otp,
-//     expiresAt: new Date(Date.now() + 5 * 60 * 1000).toISOString(), // expires in 5 mins
-//   }
-// );
-
-// async function signUpWithEmail(formData) {
-//   "use server";
-
-//   const email = formData.get("email");
-//   const password = formData.get("password");
-//   const name = formData.get("name");
-
-//   const { account } = await createAdminClient();
-
-//   await account.create(ID.unique(), email, password, name);
-//   const session = await account.createEmailPasswordSession(email, password);
-
-//   cookies().set("my-custom-session", session.secret, {
-//     path: "/",
-//     httpOnly: true,
-//     sameSite: "strict",
-//     secure: true,
-//   });
-
-//   redirect("/account");
-// }
-
-// async function signOut() {
-//   "use server";
-
-//   const { account } = await createSessionClient();
-
-//   cookies().delete("my-custom-session");
-//   await account.deleteSession("current");
-
-//   redirect("/signup");
-// }
 
 export async function getProdoucts() {
   try {

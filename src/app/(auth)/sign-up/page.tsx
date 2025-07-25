@@ -1,47 +1,13 @@
 "use client";
-import AuthHeader from "@/components/auth/AuthHeader";
-import OtherLoginOption from "@/components/auth/OtherLoginOption";
-import { SignupForm } from "@/components/auth/SignupForm";
-import { signInWithFacebookAction, signInWithGoogleAction } from "@/lib/action";
 
-import React from "react";
+import SignupPage from "@/components/auth/SignupPage";
+import { Suspense } from "react";
 
 export default function Page() {
-  async function loginWithProvider(provider: string) {
-    return provider === "google"
-      ? await signInWithGoogleAction()
-      : await signInWithFacebookAction();
-  }
+  
   return (
-    <div className="w-[90%]  flex items-center justify-center flex-col gap-2">
-      <AuthHeader />
-      <SignupForm />
-      <div className="w-full flex-col pt-4 gap-4 items-center relative flex justify-center">
-        <p
-          className="relative flex items-center justify-center w-full text-gray-500 text-sm
-    before:content-[''] before:absolute before:left-[15%] md:before:left-[20%] before:w-[20%] before:h-[1px] before:bg-zinc-300
-    after:content-[''] after:absolute after:right-[15%] md:after:right-[20%] after:w-[20%] after:h-[1px] after:bg-zinc-300"
-        >
-          Sign up with
-        </p>
-
-        <div className="flex items-center scale-[0.9] md:scale-100  md:w-full justify-center gap-2 md:gap-6 ">
-          <OtherLoginOption
-            onclick={() => loginWithProvider("google")}
-            content="Sign up"
-            color="#7b0d06"
-            name="Google"
-            type="google"
-          />
-          <OtherLoginOption
-            onclick={() => loginWithProvider("facebook")}
-            content="Sign up"
-            color="#1d203b"
-            name="Facebook"
-            type="facebook"
-          />
-        </div>
-      </div>
-    </div>
+    <Suspense fallback={<p>load...</p>}>
+      <SignupPage />
+    </Suspense>
   );
 }

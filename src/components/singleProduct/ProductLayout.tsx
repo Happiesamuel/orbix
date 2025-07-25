@@ -51,7 +51,7 @@ export default function ProductLayout() {
   ];
 
   return (
-    <div className="py-6">
+    <div className="py-3">
       <BreadcrumbWithCustomSeparator array={array} />
       <ProductBio cart={cart} setCart={setCart} product={product} />
       <ProductDetails cart={cart} setCart={setCart} product={product} />

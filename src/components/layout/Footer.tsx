@@ -51,8 +51,8 @@ export default function Footer() {
   ];
   return (
     <div className="bg-dark/95 w-full z-50 rounded-t-3xl flex flex-col items-start gap-4   md:flex-row lg:items-center justify-between pb-16 lg:pb-8 py-8 px-4 md:px-6 lg:px-20">
-      <h1 className="text-gray-ash font-[900] text-[20px]">
-        BR.<span className="text-white">F</span>
+      <h1 className=" font-[900] text-white text-[20px]">
+        Orb<span className="text-gray-ash">ix</span>
       </h1>
       <div className="flex items-center  gap-4 cursor-pointer lg:gap-8   text-sm lg:text-base">
         {links.map((link) => (

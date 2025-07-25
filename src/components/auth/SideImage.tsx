@@ -18,7 +18,7 @@ export default function SideImage() {
                 : slug === "forgot-password"
                   ? "2"
                   : slug === "reset-password"
-                    ? "5"
+                    ? "5" : slug === "set-password" ? '4'
                     : "1"
           }.jpg`}
           alt="img"
@@ -31,7 +31,7 @@ export default function SideImage() {
                 : slug === "forgot-password"
                   ? "2"
                   : slug === "reset-password"
-                    ? "5"
+                    ? "5" : slug === "set-password" ? '4'
                     : "1"
           }.jpg`}
           fill

@@ -2,12 +2,14 @@ import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "../globals.css";
 import App from "@/components/App";
-import Header from "@/components/layout/Header";
+import Header from "@/components/layout/header/Header";
 import NextTopLoader from "nextjs-toploader";
 import BottomLinks from "@/components/layout/BottomLinks";
-import MobileHeader from "@/components/layout/MobileHeader";
 import Footer from "@/components/layout/Footer";
 import { Toaster } from "@/components/ui/sonner";
+import { auth } from "@/lib/auth";
+import { getGuestViaEmail } from "@/lib/action";
+import MobileHeader from "@/components/layout/header/MobileHeader";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -20,11 +22,15 @@ const outfit = Outfit({
   variable: "--font-outfit",
 });
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
+  const guest = session?.user
+    ? ((await getGuestViaEmail(session.user.email || "")) as unknown as Guest)
+    : null;
   return (
     <html lang="en">
       <body
@@ -33,15 +39,15 @@ export default function RootLayout({
         <NextTopLoader color="#121212" height={4} showSpinner={false} />
         <App>
           <div className="hidden lg:block">
-            <Header />
+            <Header guest={guest} />
           </div>
           <div className="block lg:hidden">
             <MobileHeader />
           </div>
-          <main className="lg:mx-12 md:mx-8 mx-4 py-[65px] min-h-screen">
+          <main className="lg:mx-12 md:mx-8 mx-4 py-[60px] lg:py-[80px] min-h-screen">
             {children}
           </main>
-          <Toaster position="top-center"  />
+          <Toaster position="top-center" />
           <div className="block lg:hidden">
             <BottomLinks />
           </div>

@@ -12,7 +12,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { recoverPasswordFormSchema } from "@/lib/schemas";
+import { setPasswordFormSchema } from "@/lib/schemas";
 import ButtonLoader from "../loaders/ButtonLoader";
 import { toast } from "sonner";
 import { useState } from "react";
@@ -21,43 +21,37 @@ import { account } from "@/lib/appwriteClient";
 import { useRouter, useSearchParams } from "next/navigation";
 import { getGuestViaUserId, updateGuest } from "@/lib/action";
 
-export function PasswordReset() {
+export function SetPassword() {
   const [load, setLoad] = useState(false);
-  const searchParams = useSearchParams();
+
   const router = useRouter();
-
-  const userId = searchParams.get("userId");
-  const secret = searchParams.get("secret");
-
-  const form = useForm<z.infer<typeof recoverPasswordFormSchema>>({
-    resolver: zodResolver(recoverPasswordFormSchema),
+  const searchParams = useSearchParams();
+  const form = useForm<z.infer<typeof setPasswordFormSchema>>({
+    resolver: zodResolver(setPasswordFormSchema),
   });
+  const userId = searchParams.get("userId") || "";
+  const secret = searchParams.get("secret") || "";
 
-  async function onSubmit(values: z.infer<typeof recoverPasswordFormSchema>) {
+  async function onSubmit(values: z.infer<typeof setPasswordFormSchema>) {
     try {
-      if (!userId || !secret) {
-        toast("Invalid recovery link", {
-          description: "Please check the link and try again.",
-          duration: 4000,
-          closeButton: true,
-        });
-        return;
-      }
       setLoad(true);
-      await account.updateRecovery(userId, secret, values.password);
       const guest = await getGuestViaUserId(userId);
-      if (guest) {
-        await updateGuest({
-          id: guest.$id,
-          obj: { password: values.password },
-        });
-      }
+      if (!guest) throw new Error("Guest not found");
+      await account.createSession(userId, secret);
+      await account.get();
+      await account.updatePassword(values.password);
+      await updateGuest({
+        id: guest.$id,
+        obj: { password: values.password },
+      });
+
       setLoad(false);
-      toast("Password reset successfully", {
+      toast("Password set uccessfully", {
         description: "You can now log in with your new password.",
         duration: 4000,
         closeButton: true,
       });
+
       router.push("/login");
     } catch (error) {
       setLoad(false);

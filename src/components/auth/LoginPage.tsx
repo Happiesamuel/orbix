@@ -2,10 +2,13 @@ import React from "react";
 import AuthHeader from "@/components/auth/AuthHeader";
 import { LoginForm } from "@/components/auth/LoginForm";
 import OtherLoginOption from "@/components/auth/OtherLoginOption";
-import { signInWithFacebookAction, signInWithGoogleAction } from "@/lib/action";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "sonner";
+import {
+  loginInWithFacebookAction,
+  loginInWithGoogleAction,
+} from "@/lib/action";
 
 export default function LoginPage() {
   const searchParams = useSearchParams();
@@ -33,9 +36,10 @@ export default function LoginPage() {
 
   async function loginWithProvider(provider: string) {
     return provider === "google"
-      ? await signInWithGoogleAction()
-      : await signInWithFacebookAction();
+      ? await loginInWithGoogleAction()
+      : await loginInWithFacebookAction();
   }
+
   return (
     <div className="w-[90%]  flex items-center justify-center flex-col gap-2">
       <AuthHeader />

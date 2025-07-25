@@ -20,7 +20,7 @@ interface Product {
   warrantyInformation: string;
   sku: string;
   tags: string[];
-  brand:string
+  brand: string;
 }
 
 interface Reviews {
@@ -45,3 +45,5 @@ type Cart = {
   product: Product;
   quantity: number;
 };
+
+type Guest = { $id: string; image: string; name: string };
