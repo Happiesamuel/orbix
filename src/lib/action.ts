@@ -34,20 +34,17 @@ export async function signOutAction() {
   await signOut({ redirectTo: "/login" });
 }
 
-// export async function signInWithGoogleAction() {
-//   await signIn("google", { redirectTo: "/" });
-// }
 export async function loginInWithGoogleAction() {
-  await signIn("google", { callbackUrl: "/?from=login", redirectTo: "/" });
+  await signIn("google", { redirectTo: "/?source=login" });
 }
 export async function loginInWithFacebookAction() {
-  await signIn("facebook", { callbackUrl: "/?from=login", redirectTo: "/" });
+  await signIn("facebook", { redirectTo: "/?source=login" });
 }
 export async function signUpWithGoogleAction() {
-  await signIn("google", {   callbackUrl: "https://oorbix.vercel.app/api/auth/callback/google?from=sign-up" });
+  await signIn("google", { redirectTo: "/login?source=sign-up" });
 }
 export async function signUpWithFacebookAction() {
-  await signIn("facebook", {   callbackUrl: "https://oorbix.vercel.app/api/auth/callback/google?from=sign-up" });
+  await signIn("facebook", { redirectTo: "/login?source=sign-up" });
 }
 
 export async function getUserViaEmail(email: string) {
