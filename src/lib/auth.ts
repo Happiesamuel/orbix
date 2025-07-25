@@ -14,24 +14,26 @@ interface User {
   name: string;
   email: string;
 }
+let path = "login";
 export const { handlers, signIn, signOut, auth } = NextAuth((req) => {
-  let callUrl: string | null | undefined = null;
-  let path: string = "login";
+  // let callUrl: string | null | undefined = null;
+  // let path: string = "login";
 
-  if (req) {
-    const callbackUrlCookie = req.cookies?.get("authjs.callback-url");
-    callUrl = callbackUrlCookie?.value;
+  // if (req) {
+  //   const callbackUrlCookie = req.cookies?.get("authjs.callback-url");
+  //   callUrl = callbackUrlCookie?.value;
 
-    if (callUrl) {
-      try {
-        const parsed = new URL(callUrl);
-        const pathname = parsed.pathname;
-        path = pathname.includes("sign-up") ? "sign-up" : "login";
-      } catch (err) {
-        console.error("Invalid callback URL format:", callUrl, err);
-      }
-    }
-  }
+  //   if (callUrl) {
+  //     try {
+  //       const parsed = new URL(callUrl);
+  //       const pathname = parsed.pathname;
+  //       path = pathname.includes("sign-up") ? "sign-up" : "login";
+  //     } catch (err) {
+  //       console.error("Invalid callback URL format:", callUrl, err);
+  //     }
+  //   }
+  // }
+  console.log(req);
   return {
     providers: [
       Google({
@@ -79,6 +81,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth((req) => {
     ],
 
     callbacks: {
+      async redirect({ url, baseUrl }) {
+        const parsedUrl = new URL(url, baseUrl);
+        const source = parsedUrl.searchParams.get("source");
+        if (source) path = source;
+        return url;
+      },
       async signIn({ user }) {
         console.log(path, "path");
         if (path === "sign-up") {
