@@ -44,7 +44,7 @@ export default async function RootLayout({
           <div className="block lg:hidden">
             <MobileHeader />
           </div>
-          <main className="lg:mx-12 md:mx-8 mx-4 py-[80px] min-h-screen">
+          <main className="lg:mx-12 md:mx-8 mx-4 py-[60px] lg:py-[80px] min-h-screen">
             {children}
           </main>
           <Toaster position="top-center" />
