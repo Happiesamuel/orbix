@@ -23,7 +23,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth((req) => {
     callUrl = callbackUrlCookie?.value;
   }
 
-  const value = callUrl?.split("/").at(3)?.split("?").at(0) || "login";
+  const value = callUrl?.split("/").at(3)?.split("?").at(0) || 'login';
+  console.log(callUrl, "call");
 
   return {
     providers: [
@@ -72,27 +73,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth((req) => {
     ],
 
     callbacks: {
-      // authorized: async ({ auth }) => {
-      //   return !!auth?.user;
-      // },
-
       async signIn({ user }) {
-        if (value === "login") {
-          try {
-            if (user.email) {
-              const existingUser = await getGuestViaEmail(user.email);
-              if (!existingUser) {
-                return "/login?error=NoAccount";
-              } else {
-                return true;
-              }
-            }
-            return false;
-          } catch (error) {
-            console.error("Sign-in error:", error);
-            return "/login?error=ServerError";
-          }
-        } else {
+        console.log(value, "value");
+        if (value === "sign-up") {
           try {
             if (user.email) {
               const existingUser = await getGuestViaEmail(user.email);
@@ -116,6 +99,21 @@ export const { handlers, signIn, signOut, auth } = NextAuth((req) => {
           } catch (error) {
             console.error("Sign-in error:", error);
             return "/sign-up?success=ServerError";
+          }
+        } else {
+          try {
+            if (user.email) {
+              const existingUser = await getGuestViaEmail(user.email);
+              if (!existingUser) {
+                return "/login?error=NoAccount";
+              } else {
+                return true;
+              }
+            }
+            return false;
+          } catch (error) {
+            console.error("Sign-in error:", error);
+            return "/login?error=ServerError";
           }
         }
       },
