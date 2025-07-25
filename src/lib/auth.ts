@@ -17,14 +17,22 @@ interface User {
 
 export const { handlers, signIn, signOut, auth } = NextAuth((req) => {
   let callUrl: string | null | undefined = null;
-  if (req) {
-    const cookieStore = req?.cookies;
-    const callbackUrlCookie = cookieStore?.get("authjs.callback-url");
-    callUrl = callbackUrlCookie?.value;
-  }
+  let path: string = "login";
 
-  const value = callUrl?.split("/").at(3)?.split("?").at(0) || 'login';
-  console.log(callUrl, "call");
+  if (req) {
+    const callbackUrlCookie = req.cookies?.get("authjs.callback-url");
+    callUrl = callbackUrlCookie?.value;
+
+    if (callUrl) {
+      try {
+        const parsed = new URL(callUrl);
+        const pathname = parsed.pathname;
+        path = pathname.split("/").filter(Boolean)[0] || "login";
+      } catch (err) {
+        console.error("Invalid callback URL format:", callUrl, err);
+      }
+    }
+  }
 
   return {
     providers: [
@@ -74,8 +82,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth((req) => {
 
     callbacks: {
       async signIn({ user }) {
-        console.log(value, "value");
-        if (value === "sign-up") {
+        console.log(path, "path");
+        if (path === "sign-up") {
           try {
             if (user.email) {
               const existingUser = await getGuestViaEmail(user.email);
