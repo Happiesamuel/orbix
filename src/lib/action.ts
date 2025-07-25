@@ -34,14 +34,11 @@ export async function signOutAction() {
   await signOut({ redirectTo: "/login" });
 }
 
-// export async function signInWithGoogleAction() {
-//   await signIn("google", { redirectTo: "/" });
-// }
 export async function loginInWithGoogleAction() {
-  await signIn("google", { callbackUrl: "/?from=login", redirectTo: "/" });
+  await signIn("google", { redirectTo: "/?source=login" });
 }
 export async function loginInWithFacebookAction() {
-  await signIn("facebook", { callbackUrl: "/?from=login", redirectTo: "/" });
+  await signIn("facebook", { redirectTo: "/?source=login" });
 }
 export async function signUpWithGoogleAction() {
   await signIn("google", { redirectTo: "/login?source=sign-up" });

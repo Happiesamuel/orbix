@@ -71,9 +71,6 @@ export default function SignupPage() {
 
   async function loginWithProvider(provider: string) {
     try {
-      const params = new URLSearchParams(searchParams);
-      params.set("from", "sign-up");
-      router.push(`/sign-up?${params.toString()}`);
       if (provider === "google") {
         await signUpWithGoogleAction();
       } else {
