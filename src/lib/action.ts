@@ -44,10 +44,10 @@ export async function loginInWithFacebookAction() {
   await signIn("facebook", { callbackUrl: "/?from=login", redirectTo: "/" });
 }
 export async function signUpWithGoogleAction() {
-  await signIn("google", { callbackUrl: "/?from=sign-up" });
+  await signIn("google", {   callbackUrl: "https://oorbix.vercel.app/api/auth/callback/google?from=sign-up" });
 }
 export async function signUpWithFacebookAction() {
-  await signIn("facebook", { callbackUrl: "/?from=sign-up" });
+  await signIn("facebook", {   callbackUrl: "https://oorbix.vercel.app/api/auth/callback/google?from=sign-up" });
 }
 
 export async function getUserViaEmail(email: string) {

@@ -14,6 +14,7 @@ interface User {
   name: string;
   email: string;
 }
+
 export const { handlers, signIn, signOut, auth } = NextAuth((req) => {
   let callUrl: string | null | undefined = null;
   let path: string = "login";
@@ -26,12 +27,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth((req) => {
       try {
         const parsed = new URL(callUrl);
         const pathname = parsed.pathname;
-        path = pathname.includes("sign-up") ? "sign-up" : "login";
+        path = pathname.split("/").filter(Boolean)[0] || "login";
       } catch (err) {
         console.error("Invalid callback URL format:", callUrl, err);
       }
     }
   }
+
+  console.log("Extracted path:", path);
   return {
     providers: [
       Google({
