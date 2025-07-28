@@ -15,7 +15,7 @@ interface User {
   email: string;
 }
 let path = "login";
-export const { handlers, signIn, signOut, auth } = NextAuth((req) => {
+export const { handlers, signIn, signOut, auth } = NextAuth(() => {
   // let callUrl: string | null | undefined = null;
   // let path: string = "login";
 
@@ -33,7 +33,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth((req) => {
   //     }
   //   }
   // }
-  console.log(req);
   return {
     providers: [
       Google({

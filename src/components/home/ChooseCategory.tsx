@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import useGetProducts from "../hooks/useGetProducts";
 import useGetCatList from "../hooks/useGetCatList";
 
@@ -10,7 +10,6 @@ export default function ChooseCategory() {
   const { products, status } = useGetProducts();
 
   const { category, status: catStat } = useGetCatList();
-  const [product, setProduct] = useState<CatProduct[]>([]);
 
   if (status === "pending" || catStat === "pending")
     return (
@@ -20,11 +19,22 @@ export default function ChooseCategory() {
         ))}
       </div>
     );
-  const catList = category.map((cat: Category) =>
-    products.products.filter(
-      (product: Product) => product.category === cat.slug
+  const catList = category
+    .map((cat: Category) =>
+      products.products.filter(
+        (product: Product) => product.category === cat.slug
+      )
     )
-  );
+    .map((x: CatProduct[]) => ({
+      length: x.length,
+      product: x[Math.floor(Math.random() * x.length)],
+    }));
 
-  return <Choose catList={catList} product={product} setProduct={setProduct} />;
+  return (
+    <Choose
+      products={products.products}
+      category={category}
+      catList={catList}
+    />
+  );
 }

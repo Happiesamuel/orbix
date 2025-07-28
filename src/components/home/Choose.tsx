@@ -1,27 +1,34 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 export default function Choose({
   catList,
-  product,
-  setProduct,
+  category,
+  products,
 }: {
-  catList: Product[][];
-  product: CatProduct[];
-  setProduct: Dispatch<SetStateAction<CatProduct[]>>;
+  catList: CatProduct[];
+  category: Category[];
+  products: Product[];
 }) {
   const [active, setActive] = useState<number | null>(null);
+  const [product, setProduct] = useState<CatProduct[]>(catList);
   useEffect(() => {
     const interval = setInterval(() => {
-      const updated: CatProduct[] = catList.map((x) => ({
-        length: x.length,
-        product: x[Math.floor(Math.random() * x.length)],
-      }));
+      const updated: CatProduct[] = category
+        .map((cat: Category) =>
+          products.filter((product: Product) => product.category === cat.slug)
+        )
+        .map((x) => ({
+          length: x.length,
+          product: x[Math.floor(Math.random() * x.length)],
+        }));
+
       setProduct(updated);
     }, 10000);
 
     return () => clearInterval(interval);
-  }, [catList, setProduct]);
+  }, [catList, setProduct, category, products]);
+
   return (
     <div>
       <div className="grid  place-items-center  grid-cols-3 md:grid-cols-4  lg:grid-cols-6 gap-3 md:gap-y-6 md:gap-x-6 w-full">

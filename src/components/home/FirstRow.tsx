@@ -1,9 +1,8 @@
 "use client";
-import React, { useState } from "react";
-import Product from "../layout/Product";
 import Link from "next/link";
 import useGetHomeProduct from "../hooks/useGetHomeProducts";
 import ProductLoader from "../loaders/ProductLoader";
+import MemoProduct from "./MemoProduct";
 
 export default function FirstRow({
   category,
@@ -19,7 +18,7 @@ export default function FirstRow({
   key: string;
 }) {
   const { product, status } = useGetHomeProduct(category, key);
-  const [active, setActive] = useState<number | null>(null);
+
   if (status === "pending")
     return (
       <div className="py-3 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full gap-y-4 lg:gap-y-6 gap-2 md:gap-4 place-items-center pt-2 pb-4 lg:pt-2">
@@ -28,6 +27,7 @@ export default function FirstRow({
         ))}
       </div>
     );
+
   return (
     <div className="py-2 lg:py-6">
       <div className="flex justify-between items-center pb-2 gap-2">
@@ -43,17 +43,7 @@ export default function FirstRow({
           See More
         </Link>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full gap-y-4 lg:gap-y-6 gap-2 md:gap-4 place-items-center pt-2 pb-4">
-        {product.products.slice(0, slice).map((product: Product) => (
-          <Product
-            type="home"
-            setActive={setActive}
-            active={active}
-            product={product}
-            key={product.id}
-          />
-        ))}
-      </div>
+      <MemoProduct slice={slice} product={product.products} />
     </div>
   );
 }
