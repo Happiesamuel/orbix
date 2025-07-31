@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import AuthHeader from "@/components/auth/AuthHeader";
 import { LoginForm } from "@/components/auth/LoginForm";

@@ -28,6 +28,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await auth();
+
   const guest = session?.user
     ? ((await getGuestViaEmail(session.user.email || "")) as unknown as Guest)
     : null;

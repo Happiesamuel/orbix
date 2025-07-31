@@ -2,7 +2,7 @@
 import Link from "next/link";
 import React from "react";
 import { BiSolidCategory } from "react-icons/bi";
-import { FaHeart, FaHome, FaShoppingCart } from "react-icons/fa";
+import { FaHeart, FaHome, FaShoppingCart, FaUser } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 
 export default function BottomLinks() {
@@ -32,6 +32,12 @@ export default function BottomLinks() {
       route: "/favorite",
       slug: "Favorite",
       content: "favorite",
+    },
+    {
+      svg: <FaUser />,
+      route: "/account",
+      slug: "Account",
+      content: "account",
     },
   ];
   return (
